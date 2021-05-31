@@ -1,0 +1,56 @@
+﻿@model IEnumerable<BizSol.Models.ApplicationUser>
+
+@{
+    ViewBag.Title = "Users";
+    int i = 1;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+    <div class="container">
+        <table id="userTable" class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">UserName</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Number</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+
+                    foreach (var user in Model)
+                    {
+                        <tr>
+                            <th scope="row">@i</th>
+                            <td>@user.UserName</td>
+                            <td>@user.Email</td>
+                            <td>@user.PhoneNumber</td>
+                            <td>
+                                @Html.ActionLink("User Ads", "Ads", "Admin", new { userId = user.Id }, htmlAttributes: new { @class = "btm btn-primary" }) |
+                                @Html.ActionLink("Delete", "DeleteUser", "Admin", new { userId = user.Id }, htmlAttributes: new { @class = "btm btn-Danger" })
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td class="text-danger" colspan="4">No User found.</td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+@section Scripts{
+    
+<script>
+    $(document).ready(function () {
+        $('#userTable').DataTable();
+    });
+</script>
+    }

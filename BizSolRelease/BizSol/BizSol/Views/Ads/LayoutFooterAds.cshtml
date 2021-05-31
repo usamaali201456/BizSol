@@ -1,0 +1,65 @@
+﻿@model BizSol.Models.ViewModels.AdsViewModel
+
+<div class="col-lg-3 col-sm-6 match-height">
+    <div class="widget-box">
+        <div class="widget-title"><h4>Recent Ads Post</h4></div>
+        <div class="widget-content">
+            @if (Model.adpost != null)
+            {
+                foreach (var item in Model.adpost.Take(3).OrderByDescending(x=>x.WhenAdded))
+                {
+
+
+                    <div class="media footer-pr-widget-v2">
+                        <div class="media-left">
+                            <a class="media-img" href="@Url.Action("ViewAd","User", new { id=item.PostId})">
+                                <img class="media-object" src="@Url.Content(item.AdsImages.FirstOrDefault().ImagePath)" alt="">
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <span><i class="fa fa-clock-o"></i>@item.WhenAdded.Date.ToString("dd/MMM/yyyy")</span>
+                            <h5 class="media-heading">
+                                <a href="@Url.Action("ViewAd","User", new { id=item.PostId})">@item.Title</a>
+                            </h5>
+                            <p class="price">
+                                Price : <span class="color">
+                                    RS: @item.Price
+
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+
+@*<div class="col-lg-3 col-sm-6 match-height">
+        <div class="widget-box">
+            <div class="widget-title"><h4>Featured Ads</h4></div><div class="widget-content">
+                <ul class="list-inline grid-view-pr">
+                    @{
+                        Random rn = new Random();
+
+                        foreach (var item in Model.adPost)
+                        {
+                            <li>
+                                <span>
+                                    <img class="img-rounded" src="@Url.Content(item.Image)" alt="">
+                                    <a href="ADD VIEW MODEL ///HERE" class="hover-posts">
+                                        <span>
+                                            @item.Price
+                                        </span>
+                                    </a>
+                                </span>
+                            </li>
+                        }
+                    }
+
+                </ul>
+            </div>
+        </div>
+    </div>*@
+

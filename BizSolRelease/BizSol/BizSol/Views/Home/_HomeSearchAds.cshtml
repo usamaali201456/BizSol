@@ -1,0 +1,204 @@
+﻿@model BizSol.Models.ViewModels.SearchHomeViewModel
+@*<link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" ></script>*@
+
+<style>
+    .pointer {
+        cursor: pointer;
+    }
+</style>
+
+
+<section class="classiera-advertisement advertisement-v5 section-pad-80 border-bottom" @*id="searchdata"*@>
+
+    <div class="section-heading-v5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-8 center-block">
+                    <h1 class="text-capitalize" style=" text-align:center">ADVERTISEMENTS</h1>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-divs">
+        @if (Model.searchTerm != null || Model.CategoryId != null || Model.CityId != null)
+        {
+            <div class="view-head">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-7 col-xs-8">
+                            <div class="tab-button">
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation">
+                                        <a href="@Url.Action("Index","Home")" @*aria-controls="all" role="tab" data-toggle="tab"*@>
+                                            All Ads										@*<span class="arrow-down"></span>*@
+                                        </a>
+                                    </li>
+                                </ul><!--nav nav-tabs-->
+                            </div><!--tab-button-->
+                        </div><!--col-lg-6 col-sm-8-->
+                    </div><!--row-->
+                </div><!--container-->
+            </div>
+
+        }
+
+        <div class="tab-content" id="adpostData">
+            <div role="tabpanel" class="tab-pane fade in active" id="all">
+                <div class="container">
+                    <div class="row">
+                        <!--FeaturedAds-->
+
+
+                        @if (Model.adpost != null)
+                        {
+                            foreach (var item in Model.adpost)
+                            {
+                                <div class="col-lg-4 col-md-4 col-sm-6 match-height item item-grid" style="">
+                                    <div class="classiera-box-div classiera-box-div-v5">
+                                        <figure class="clearfix">
+                                            <div class="premium-img">
+                                                @{
+                                                    if (item.AdsImages.Count != 0)
+                                                    {
+                                                        <img class="img-responsive" src="@Url.Content(item.AdsImages.FirstOrDefault().ImagePath)" alt="@item.Title">
+                                                    }
+                                                }
+                                                <span class="hover-posts">
+                                                    <a href="@Url.Action("ViewAd", "Ads", new {id = @item.PostId})">View Ad</a>
+
+                                                </span>
+                                                <span class="price">
+
+                                                    RS: @item.Price
+                                                </span>
+
+
+                                            </div><!--premium-img-->
+                                            <div class="detail text-center">
+                                                <span class="price">
+
+                                                    RS: @item.Price
+                                                </span>
+
+
+                                                <div class="box-icon">
+                                                    <a href="#"><i class="fa fa-envelope"></i></a>
+                                                </div>
+
+
+
+                                                <a href="@Url.Action("ViewAd","Ads", new { id = @item.PostId })" class="btn btn-primary outline btn-style-five">View Ad</a>
+
+
+
+
+                                            </div><!--detail text-center-->
+                                            <figcaption>
+                                                <span class="price visible-xs">
+
+                                                    RS: @item.Price
+                                                </span>
+
+
+
+                                                <h5 style="height:15px"><a href="@Url.Action("ViewAd","Ads", new { id = @item.PostId })">@item.Title</a></h5>
+                                                <span>
+                                                    @(item.Detail.Length > 43 ? item.Detail.Substring(0, 44) : item.Detail)...
+                                                </span>
+
+
+                                                <div class="category">
+
+                                                    <span style="float:left">
+
+
+                                                        Condition : @item.Condition
+
+                                                    </span>
+
+                                                    <span style="margin-left:80%">
+                                                        @item.WhenAdded.Date.ToString("dd/MMM/yy")
+                                                    </span>
+                                                    <span>
+                                                        Location :
+                                                        <a href="#"></a>
+                                                    </span>
+                                                </div>
+                                                @*<p class="description">@item.Condition</p>*@
+                                            </figcaption>
+                                        </figure>
+                                    </div><!--row-->
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <h2 class="text-danger" colspan="4">No Ads found.</h2>
+                        }
+
+
+                    </div><!--row-->
+                </div><!--col-lg-4-->
+            </div><!--row-->
+        </div><!--container-->
+    </div><!--tabpanel popular-->
+    <div class="view-all text-center">
+        <div>
+            Page @Model.Pager.CurrentPage of @Model.Pager.TotalPages
+
+            @if (Model.Pager != null && Model.Pager.TotalPages > 1)
+            {
+                <div>
+                    <ul class="pagination">
+                        @if (Model.Pager.CurrentPage > 1)
+                        {
+                            <li class="prev">
+                                <a data-href="@Url.Action("_HomeSearchAds", "Home", new { pageNo = Model.Pager.CurrentPage - 1,categoryId = Model.CategoryId, cityId = Model.CityId,search = Model.searchTerm})" class="pageDataLink PagedList-skipToPrevious pointer">«</a>
+                            </li>
+                        }
+
+                        @for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
+                        {
+                            string activeClass = Model.Pager.CurrentPage == page ? "active bg-info" : string.Empty;
+
+                            <li class="@activeClass"><a data-href="@Url.Action("_HomeSearchAds", "Home", new { pageNo = page,categoryId = Model.CategoryId, cityId = Model.CityId,search = Model.searchTerm})" title="" class="pageDataLink pageDataLink pointer">@page</a></li>
+                        }
+
+                        @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+                        {
+                            <li><a data-href="@Url.Action("_HomeSearchAds", "Home", new { pageNo = Model.Pager.CurrentPage + 1,categoryId = Model.CategoryId, cityId = Model.CityId,search = Model.searchTerm})" class="pageDataLink PagedList-skipToNext pointer">»</a></li>
+                        }
+                    </ul><!-- /.flat-pagination -->
+                </div>
+            }
+        </div>
+    </div>
+    <!--tab-content-->
+    <!--tab-divs-->
+
+</section>
+
+<input type="hidden" id="SearchTerm" value="@Model.searchTerm" />
+<input type="hidden" id="CityID" value="@Model.CategoryId" />
+<input type="hidden" id="CategoryId" value="@Model.CityId" />
+
+
+<script>
+    $(".pageDataLink").click(function () {
+        debugger;
+		var url = $(this).attr("data-href");
+
+		if (url != "" || url != undefined) {
+			GetData(url);
+        }
+	});
+
+
+</script>
+
+
+
+
+

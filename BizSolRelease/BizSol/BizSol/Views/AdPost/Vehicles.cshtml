@@ -1,0 +1,324 @@
+﻿@model BizSol.Models.ViewModels.VehicleViewModel
+
+@{
+    ViewBag.Title = "Vehicles";
+    Layout = "~/Views/Shared/_LayoutWithOutSearch.cshtml";
+}
+
+
+
+<head>
+    <link href="~/Content/Category.css" rel="stylesheet" />
+</head>
+
+
+<section>
+    <div class="container">
+        <div class="row">
+
+           
+
+            <div class="col-lg-9 col-md-8 user-content-height">
+                <div class="submit-post section-bg-white">
+                    <form class="form-horizontal" action="" onclick="location.href'@Url.Action("Vehicles","AdPost")'" role="form" method="POST" data-toggle="validator" enctype="multipart/form-data">
+                        <h4 class="text-uppercase border-bottom">MAKE NEW AD&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-car"></i></h4>
+                        <!--Category-->
+                        <!--Category-->
+                        @Html.HiddenFor(m => m.cat_Id)
+                        @Html.HiddenFor(m => m.Vehicle_Id)
+                        @Html.HiddenFor(p => p.PostId)
+                        <div class="form-main-section post-detail">
+                            <h4 class="text-uppercase">Ad Details :</h4>
+                            <div class="form-group">
+                                <label class="col-sm-3 text-left flip" for="title">Ad title : <span>*</span></label>
+                                <div class="col-sm-9">
+                                    <input id="title" data-minlength="5" value="@Model.Title" name="Title" type="text" class="form-control form-control-md" placeholder="Ad Title Goes here" required>
+                                    @Html.ValidationMessageFor(t => t.Title, "", new { @class = "text-danger" })
+                                </div>
+                            </div><!--Ad title-->
+                            <div class="form-group">
+                                <label class="col-sm-3 text-left flip" for="description">Ad description : <span>*</span></label>
+                                <div class="col-sm-9">
+                                    <textarea name="Detail" id="description" class="form-control" data-error="Write description" required>@Model.Detail</textarea>
+                                    <div class="help-block with-errors"></div>
+                                    @Html.ValidationMessageFor(t => t.Detail, "", new { @class = "text-danger" })
+                                </div>
+                            </div><!--Ad description-->
+                            <div class="form-group">
+                                <label class="col-sm-3 text-left flip">Price :  <span>*</span></label>
+                                <div class="col-sm-9">
+                                    <div class="form-inline row">
+                                        <div class="col-sm-12">
+                                            <div class="input-group">
+                                                <div class="input-group-addon"><i class="fa fa-tags"></i></div>
+                                                <input type="number" value="@Model.Price" name="Price" class="form-control form-control-md" placeholder="Enter Price" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                                @Html.ValidationMessageFor(t => t.Price, "", new { @class = "text-danger" })
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!--Ad Price-->
+                            <div class="form-group">
+                                <label class="col-sm-3 text-left flip" for="title">Brand Name : <span>*</span></label>
+                                <div class="col-sm-9">
+                                    <input id="title" data-minlength="3" value="@Model.BrandName" name="BrandName" type="text" class="form-control form-control-md" placeholder="Brand Name">
+                                    @Html.ValidationMessageFor(t => t.BrandName, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 text-left flip">Mileage:  <span>*</span></label>
+                                <div class="col-sm-9">
+                                    <div class="form-inline row">
+                                        <div class="col-sm-12">
+                                            <div class="input-group">
+                                                <div class="input-group-addon"><i class="fa fa-road"></i></div>
+                                                <input type="number" value="@Model.Vehicle_Milage" name="Vehicle_Milage" class="form-control form-control-md" placeholder="Enter Milage" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                                @Html.ValidationMessageFor(t => t.Vehicle_Milage, "", new { @class = "text-danger" })
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 text-left flip">Year : <span>*</span> </label>
+                                <div class="col-sm-9">
+                                    <div class="form-inline row">
+                                        <div class="col-sm-12">
+                                            <div class="input-group">
+                                                <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                                <input type="number" value="@Model.Vehicle_Year" name="Vehicle_Year" class="form-control form-control-md" placeholder="Enter Year" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                                @Html.ValidationMessageFor(t => t.Vehicle_Year, "", new { @class = "text-danger" })
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--ContactPhone-->
+                            <!--ContactPhone-->
+                            <div class="form-group">
+                                <label class="col-sm-3 text-left flip">Item Condition : <span>*</span></label>
+                                <div class="col-sm-9">
+                                    <div class="radio">
+                                        <input id="new" type="radio" name="Condition" value="new" checked />
+                                        <label for="new">Brand New</label>
+                                        <input id="used" type="radio" name="Condition" value="used" @(Model.Condition!=null?Model.Condition.Contains("used") ? "checked" : "":"") />
+                                        <label for="used">Used</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 text-left flip">Is Registered : <span>*</span></label>
+                                <div class="col-sm-9">
+                                    <div class="radio">
+                                        <input id="yes" type="radio" name="IsFileAvailable" value="yes" checked />
+                                        <label for="yes">Yes</label>
+                                        <input id="no" type="radio" name="IsFileAvailable" value="no" @(Model.IsFileAvailable!=null?Model.IsFileAvailable.Contains("no") ? "checked" : "":"") />
+                                        <label for="no">No</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!---form-main-section post-detail-->
+                        <!-- extra fields -->
+                        <div class="classieraExtraFields" style="display:none;"></div>
+                        <!-- extra fields -->
+                        <!-- add photos and media -->
+                        <div class="form-main-section media-detail">
+
+                            <h4 class="text-uppercase border-bottom">Image:</h4>
+                            <div class="form-group">
+                                <label class="col-sm-3 text-left flip">Photos for your ad :</label>
+                                <div class="col-sm-9">
+                                    <div class="classiera-dropzone-heading">
+                                        <i class="classiera-dropzone-heading-text fa fa-cloud-upload" aria-hidden="true"></i>
+                                        <div class="classiera-dropzone-heading-text">
+                                            <p>Select files to Upload</p>
+                                            <p>You can add multiple images. Ads With photo get 50% more Responses</p>
+                                            <p class="limitIMG">You can upload&nbsp;5&nbsp;Images maximum.</p>
+                                        </div>
+                                    </div>
+                                    <div id="mydropzone" class="classiera-image-upload clearfix" data-maxfile="2">
+                                        <!--Imageloop-->
+                                        @{
+                                            if (Model.AdsImages != null)
+                                            {
+                                                for (int i = 0; i < Model.AdsImages.Count; i++)
+                                                {
+                                                    <div class="classiera-image-box">
+                                                        <div class="classiera-upload-box">
+                                                            <input name="image-count" type="hidden" value="2" />
+                                                            <input class="classiera-input-file imgInp" id="imgInp@(i)" type="file" name="image_file">
+                                                            <label class="img-label" for="imgInp@(i)"><i class="fa fa-plus-square-o"></i></label>
+                                                            <div class="classiera-image-preview" style="display:block">
+                                                                <img class="my-image" src="@Model.AdsImages[i].ImagePath" data-id="@Model.AdsImages[i].Id"/>
+                                                                <span class="remove-img"><i class="fa fa-times-circle"></i></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <input type="hidden" name="classiera_featured_img" id="classiera_featured_img" value="0">
+                                                }
+                                            }
+                                            else
+                                            {
+                                                for (int i = 1; i <= 5; i++)
+                                                {
+                                                    <div class="classiera-image-box">
+                                                        <div class="classiera-upload-box">
+                                                            <input name="image-count" type="hidden" value="2" />
+                                                            <input class="classiera-input-file imgInp" id="imgInp@(i)" type="file" name="image_file">
+                                                            <label class="img-label" for="imgInp@(i)"><i class="fa fa-plus-square-o"></i></label>
+                                                            <div class="classiera-image-preview">
+                                                                <img class="my-image" src="" />
+                                                                <span class="remove-img"><i class="fa fa-times-circle"></i></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <input type="hidden" name="classiera_featured_img" id="classiera_featured_img" value="0">
+                                                }
+                                            }
+
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- add photos and media -->
+                        <!-- post location -->
+                        <div class="form-main-section post-location">
+                            @*<h4 class="text-uppercase border-bottom">Ad Location :</h4>*@
+                            <!--Select Country-->
+                            <div class="form-group">
+                                <label class="col-sm-3 text-left flip">Select City: <span>*</span></label>
+                                <div class="col-sm-6">
+                                    <div class="inner-addon right-addon">
+                                        <i class="form-icon right-form-icon fa fa-angle-down"></i>
+                                        @Html.DropDownListFor(x => x.CityID, ViewBag.Citieslist as SelectList, "--Select City--", new { @class = "form-control" })
+
+                                        <span style="color:red">   @Html.ValidationMessageFor(x => x.cat_Id) </span>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Select Country-->
+
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-9">
+                                <div class="help-block terms-use">
+                                    By clicking &quot;Publish Ad&quot;, you agree to our <a href="#">Terms of Use</a> and acknowledge that you are the rightful owner of this item
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-main-section">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <input type="hidden" name="submit" value="Login" id="submit" />
+                                    <button type="submit" name="op" class="btn btn-primary sharp btn-md btn-style-one">Submit ad</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div><!--submit-post-->
+            </div><!--col-lg-9 col-md-8 user-content-heigh-->
+
+        </div>
+    </div>
+</section>
+
+
+
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+
+        function readURL() {
+            var $input = jQuery(this);
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                //reader.readAsDataURL(files[0]);
+                reader.onload = function (e) {
+                    //var img = new Image;
+                    //img.src = e.target.result;
+
+                    //var height = files[0].height;
+                    //var weidth = files[0].width;
+                    //alert(height + weidth);
+                    $input.siblings('.classiera-image-preview').show().children('.my-image').attr('src', e.target.result);
+
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
+        }
+        function readProfileURL() {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.readAsDataURL(files[0])
+                reader.onload = function (e) {
+                    var img = new Image;
+                    img.src = e.target.result;
+                    img.onload = function () {
+                        var height = files[0].height;
+                        var width = files[0].width;
+                        alert(height + width);
+                        jQuery('.uploadImage').children('.author-avatar').attr('src', e.target.result);
+                    }
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
+        }
+
+
+
+        jQuery(document).on('change', ".imgInp", readURL);
+        jQuery(document).on('click', ".remove-img", function () {
+            jQuery(this).parents('.classiera-upload-box').find('.imgInp').val(null); jQuery(this).parent().hide();
+            jQuery(this).prev().attr('src', '#');
+            var id = jQuery(this).prev().attr("data-id");
+            if (id != "undefined") {
+            jQuery.ajax({
+                url: "/AdPost/DeleteAdImage",
+                cache: false,
+                type: "POST",
+                data: { id: id },
+                success: function () {
+                    alert("image successfully removed")
+                },
+                error: function () {
+                    alert("Failed to delete image")
+                }
+
+                })
+            }
+        });
+        jQuery(document).on('click', '.my-image', function () {
+            var count = jQuery(this).parent().parent().parent().index(); jQuery('#classiera_featured_img').val(count);
+        });
+        jQuery(document).on('click', '.classiera-image-preview', function () {
+            if (jQuery('.classiera-upload-box').hasClass('classiera_featured_box')) {
+                jQuery('.classiera-upload-box').removeClass('classiera_featured_box');
+            }
+            jQuery(this).parent().addClass('classiera_featured_box');
+        });
+    });
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+

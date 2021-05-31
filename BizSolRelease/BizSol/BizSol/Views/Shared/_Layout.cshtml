@@ -1,0 +1,641 @@
+﻿
+@model BizSol.Models.ViewModels.HomeViewModel
+
+
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7" lang="en-US">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8" lang="en-US">
+<![endif]-->
+<!--[if !(IE 7) | !(IE 8)  ]><!-->
+<html lang="en-US">
+<!--<![endif]-->
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:image" content="http://demo.joinwebs.com/classiera/pearl/wp-content/uploads/2017/12/pearl-logo.png">
+    <link rel="shortcut icon" href="~/Images/favicon2.png" type="image/x-icon">
+    <link type="text/css" media="all" href="http://demo.joinwebs.com/classiera/pearl/wp-content/cache/autoptimize/css/autoptimize_501b1391d32759aa9d85c3327373f701.css" rel="stylesheet" />
+    <link type="text/css" media="only screen and (max-width: 768px)" href="http://demo.joinwebs.com/classiera/pearl/wp-content/cache/autoptimize/css/autoptimize_dcb2de333eec7ab4ae31385ed8d6a393.css" rel="stylesheet" />
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Ubuntu:700,400%7Cubuntu:700%7COpen+Sans">
+    <script src="~/Scripts/sweetalert.min.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <title>BizSol</title>
+   
+</head>
+
+
+<body class="home page-template page-template-template-landing page-template-template-landing-php page page-id-6 theme-classiera woocommerce-no-js single-author">
+    <header>
+        <!-- NavBar -->
+        <section class="classiera-navbar   classiera-navbar-v6 ">
+            <!--Only Shown For Nav Style 4-->
+            <nav id="myNavmenu" class="navmenu navmenu-default offcanvas offcanvas-light navmenu-fixed-left" role="navigation">
+                <div class="navmenu-brand clearfix">
+                    <a href="@Url.Action("Index", "Home")">
+
+                        <img src="~/Images/bizsolLogo.png" style="max-width:109px;margin-top: -41px" alt="BizSol Sell old Buy new">
+                    </a>
+                    <button type="button" class="offcanvas-button" data-toggle="offcanvas" data-target="#myNavmenu">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </div><!--navmenu-brand clearfix-->
+                <div class="log-reg-btn text-center">
+                    @{
+                        if (!User.Identity.IsAuthenticated)
+                        {
+                            <a href="@Url.Action("Login","Account")" class="offcanvas-log-reg-btn">
+                                Login
+                            </a>
+                        }
+                        else if (User.Identity.IsAuthenticated)
+                        {
+                            <a title="@User.Identity.Name" href="@Url.Action("Usr_profile","User")" class="offcanvas-log-reg-btn">
+                                @(User.Identity.Name.Length > 8 ? User.Identity.Name.Substring(0, 7) : User.Identity.Name)
+                            </a>
+                        }
+
+                        if (!User.Identity.IsAuthenticated)
+                        {
+
+                            <a href="@Url.Action("Register","Account")" class="offcanvas-log-reg-btn">
+                                Get Registered
+                            </a>
+                        }
+
+                    }
+                </div>
+                <div class="menu-main-menu-container">
+                    <ul id="menu-main-menu" class="nav navmenu-nav">
+                        <li id="menu-item-260" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-6 current_page_item current-menu-ancestor current-menu-parent current_page_parent current_page_ancestor menu-item-has-children menu-item-260 dropdown active">
+                            <a title="Home" href="@Url.Action("Index","Home")">Home </a>
+                        </li>
+                        <li id="menu-item-261" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-261"><a title="About Us" href="@Url.Action("AboutUs","Home")" target="_blank">About Us</a></li>
+                        @if (!User.Identity.IsAuthenticated)
+                        {
+                            <li id="menu-item-264" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-264"><a title="Submit ad" href="@Url.Action("Register","Account")">Want to submit ad</a></li>
+                        }
+                        <li id="menu-item-247" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-247 dropdown">
+                            <a title="Categories" href="#" data-toggle="dropdown" data-hover="dropdown" data-animations="fadeIn" class="dropdown-toggle" aria-haspopup="true">Categories<span class="caret"></span></a><a class="dropdown-toggle resposnive-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#"><i class="fa fa-plus"></i></a>
+                            <ul role="menu" class="dropdown-menu">
+                                @foreach (var category in Model.categories)
+                                {
+                                    <li id="menu-item-280" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-280"><a title="@category.cat_name" href="@Url.Action("Index","Ads",new { categoryId = category.cat_Id})">@category.cat_name</a></li>
+                                }
+                            </ul>
+                        </li>
+                        <li id="menu-item-266" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-266"><a title="Contact Us" href="@Url.Action("ContactUs","Home")" target="_blank">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="submit-post">
+                    @{
+                        if (User.Identity.IsAuthenticated)
+                        {
+                            <div class="submit-post">
+                                <a href="@Url.Action("showCategory","AdPost")" class="btn btn-block btn-primary btn-md active">
+                                    Submit Ad
+                                </a>
+                            </div><!--submit-post-->
+                        }
+
+                        else if (!User.Identity.IsAuthenticated)
+                        {
+                            <div class="submit-post">
+                                <a href="@Url.Action("Register","Account")" class="btn btn-block btn-primary btn-md active">
+                                    Submit Ad
+                                </a>
+                            </div><!--submit-post-->
+                        }
+
+
+                    }
+                </div><!--submit-post-->
+                <div class="social-network">
+                    <h5>Social network</h5>
+                    <!--FacebookLink-->
+                    <a href="#" class="social-icon social-icon-sm offcanvas-social-icon" target="_blank">
+                        <i class="fa fa-facebook"></i>
+                    </a>
+                    <!--twitter-->
+                    <a href="#" class="social-icon social-icon-sm offcanvas-social-icon" target="_blank">
+                        <i class="fa fa-twitter"></i>
+                    </a>
+                    <!--Dribbble-->
+                    <!--Flickr-->
+                    <!--Github-->
+                    <!--Pinterest-->
+                    <!--Google-->
+                    <a href="#" class="social-icon social-icon-sm offcanvas-social-icon" target="_blank">
+                        <i class="fa fa-google-plus"></i>
+                    </a>
+                    <!--Vimeo-->
+                </div>
+            </nav>
+            <!--Only Shown For Nav Style 4-->
+            <div class="">
+                <!-- mobile off canvas nav -->
+                <!-- mobile off canvas nav -->
+                <!--Primary Nav-->
+                <nav class="navbar navbar-default ">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target="#myNavmenu" data-canvas="body">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand-custom" href="@Url.Action("Index", "Home")">
+                            <img class="img-responsive" src="~/Images/bizsolLogo.png" style="max-width:109px;margin-top: -41px" alt="BizSol Sell old Buy new">
+                        </a>
+                    </div><!--navbar-header-->
+                    <div class="collapse navbar-collapse visible-lg" id="navbarCollapse">
+                        <div class="navbar-right login-reg flip">
+                            @{
+                                if (!User.Identity.IsAuthenticated)
+                                {
+                                    <a href="@Url.Action("Login","Account")">Login <i class="fa fa-user"></i></a>
+                                }
+                                else if (User.Identity.IsAuthenticated)
+                                {
+
+                                    <a title="@User.Identity.Name" href="@Url.Action("Usr_profile","User")">
+                                        @(User.Identity.Name.Length > 8 ? User.Identity.Name.Substring(0, 7) : User.Identity.Name)<i class="fa fa-user"></i>
+                                    </a>
+                                }
+                                if (User.Identity.IsAuthenticated)
+                                {
+                                    <a href="@Url.Action("showCategory","AdPost")" class="btn btn-primary outline round">Submit Ad</a>
+                                }
+                                else if (!User.Identity.IsAuthenticated)
+                                {
+                                    <a href="@Url.Action("Register","Account")" class="btn btn-primary outline round">Submit Ad</a>
+                                }
+
+                            }
+                        </div>
+                        <ul id="menu-main-menu-1" class="nav navbar-nav navbar-right nav-margin-top flip nav-ltr">
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-6 current_page_item current-menu-ancestor current-menu-parent current_page_parent current_page_ancestor menu-item-has-children menu-item-260 dropdown active">
+                                <a title="Home" href="@Url.Action("Index","Home")">Home </a>
+                            </li>
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-261"><a title="About Us" href="@Url.Action("AboutUs","Home")" target="_blank">About Us</a></li>
+                            @if (!User.Identity.IsAuthenticated)
+                            {
+                                <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-263"><a title="Submit ad" href="@Url.Action("Register", "Account")">Want to submit ad</a></li>
+                            }
+                            <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-247 dropdown">
+                                <a title="Categories" href="#" data-toggle="dropdown" data-hover="dropdown" data-animations="fadeIn" class="dropdown-toggle" aria-haspopup="true">Categories<span class="caret"></span></a><a class="dropdown-toggle resposnive-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#"><i class="fa fa-plus"></i></a>
+                                <ul role="menu" class="dropdown-menu">
+                                    @foreach (var category in Model.categories)
+                                    {
+                                        <li id="menu-item-280" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-280"><a title="@category.cat_name" href="@Url.Action("Index","Ads",new { categoryId = category.cat_Id})">@category.cat_name</a></li>
+                                    }
+                                </ul>
+                            </li>
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-266"><a title="Contact Us" href="@Url.Action("ContactUs","Home")" target="_blank">Contact Us</a>></li>
+                        </ul>
+                    </div><!--collapse navbar-collapse visible-lg-->
+                </nav>
+                <!--Primary Nav-->
+            </div><!--container-->
+        </section>
+        <!-- NavBar -->	<!-- Mobile App button -->
+
+        <div class="mobile-submit affix">
+            <ul class="list-unstyled list-inline mobile-app-button">
+                @{
+
+                    if (!User.Identity.IsAuthenticated)
+                    {
+                        <li>
+                            <a href="@Url.Action("Login", "Account")">
+                                <i class="fa fa-sign-in"></i>
+                                <span>Login</span>
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a title="@User.Identity.Name" href="@Url.Action("Usr_profile", "User")">
+                                <i class="fa fa-sign-in"></i>
+                                <span>@(User.Identity.Name.Length > 8 ? User.Identity.Name.Substring(0, 7) : User.Identity.Name)</span>
+                            </a>
+                        </li>
+                    }
+                    if (User.Identity.IsAuthenticated)
+                    {
+                        <li>
+                            <a href="@Url.Action("showCategory", "AdPost")">
+                                <i class="fa fa-edit"></i>
+                                <span>Submit Ad</span>
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a href="@Url.Action("Register", "Account")">
+                                <i class="fa fa-edit"></i>
+                                <span>Submit Ad</span>
+                            </a>
+                        </li>
+                    }
+                    if (!User.Identity.IsAuthenticated)
+                    {
+                        <li>
+                            <a href="@Url.Action("Registration", "User")">
+                                <i class="fa fa-user-o"></i>
+                                <span>Get Registered</span>
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            @using (Html.BeginForm("Logout", "User", FormMethod.Post, new { id = "logoutForm" }))
+                            {
+                                <a href="javascript:document.getElementById('logoutForm').submit()">
+                                    <i class="fa fa-user-o"></i>
+                                    <span>Logout</span>
+                                </a>
+                            }
+
+                        </li>
+                    }
+
+                }
+            </ul>
+        </div>
+        <!-- Mobile App button -->
+    </header>
+    <section class="classiera-static-slider">
+        <div class="container">
+            <div class="row">
+                <div class="classiera-static-slider-content text-center">
+                    <h1> <span class="color">BizSol</span></h1>
+                    <h2>Sell Old | Buy New </h2>
+                </div>
+            </div>
+        </div><!--container-->
+        <section class="search-section search-section-v6">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form data-toggle="validator" role="form" class="search-form search-form-v2 form-inline" method="get">
+                            <div class="form-v6-bg">
+                                <div class="form-group clearfix">
+                                    <div class="inner-addon left-addon right-addon">
+                                        <i class="form-icon form-icon-size-small left-form-icon zmdi zmdi-sort-amount-desc"></i>
+                                        <i class="form-icon form-icon-size-small fa fa-sort"></i>
+                                        <select class="form-control form-control-lg" data-placeholder="Select Category.." name="category_name" id="categoryList" onchange="getCategoryValue();">
+                                            <option name="category" value="" selected disabled>Select Category..</option>
+                                            @foreach (var category in Model.categories)
+                                            {
+                                                <option name="category" value="@category.cat_Id">@category.cat_name</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div><!--form-group-->
+                                <!--form-group-->
+                                <div class="form-group classieraAjaxInput">
+                                    <div class="input-group inner-addon left-addon">
+                                        <i class="form-icon form-icon-size-small left-form-icon zmdi zmdi-border-color"></i>
+                                        <input type="text" name="search" id="search" class="form-control form-control-lg" placeholder="Enter keyword..." data-error="Please Type some words..!">
+                                        <div class="help-block with-errors"></div>
+                                        @*<span class="classieraSearchLoader"><img src="http://demo.joinwebs.com/classiera/pearl/wp-content/themes/classiera/images/loader.gif" alt="classiera loader"></span>
+                                            <div class="classieraAjaxResult"></div>*@
+                                    </div>
+                                </div><!--form-group-->
+                                <!--Searchlocation-->
+                                <div class="form-group">
+                                    <div class="input-group inner-addon left-addon">
+                                        <i class="form-icon form-icon-size-small left-form-icon zmdi zmdi-pin-drop"></i>
+                                        <select class="form-control form-control-lg" data-placeholder="Select City..." name="city_name" id="cityList" onchange="getCityValue();">
+                                            <option selected disabled>Select City..</option>
+                                            @foreach (var city in Model.cities)
+                                            {
+                                                <option name="city" value="@city.CityID">@city.CityName</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div><!--form-group-->
+                                <!--Searchlocation-->
+                                <div class="form-group" style="width:17%!important" id="btnbtnsearch">
+                                    <button type="button" id="searchBtn">Search</button>
+                                </div><!--form-group-->
+                            </div><!--form-v6-bg-->
+                        </form>
+                    </div><!--col-md-12-->
+                </div><!--row-->
+            </div><!--container-->
+        </section><!--search-section-->
+    </section>
+
+
+
+
+
+
+
+
+    <script src="~/Scripts/sweetalert.min.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+
+
+    @RenderSection("Scripts", required: false)
+
+
+    @RenderBody()
+
+
+
+
+
+
+    <footer class="section-pad section-bg-black four-columns-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-sm-6 match-height">
+                    <div class="widget-box">
+                        <div class="widget-title">
+                            <img class="img-responsive" src="~/Images/bizsolLogo.png" style="max-width:120px;margin-top: -41px" alt="">
+                        </div>
+                        <div class="widget-content">
+                            <div class="textwidget"></div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6 match-height" style="height: 484px;">
+                    <div class="widget-box">
+                        <div class="widget-title"><h4>Recent Ads Post</h4></div>
+                        <div class="widget-content">
+                            @if (Model.totalAds != null)
+                            {
+                                foreach (var ad in Model.totalAds.Take(3))
+                                {
+
+                                    <div class="media footer-pr-widget-v2">
+                                        <div class="media-left">
+                                            <a class="media-img" href="@Url.Action("ViewAd", "Ads", new {id = ad.PostId})">
+                                                @{
+                                                    if (ad.AdsImages.Count != 0)
+                                                    {
+                                                        <img class="media-object" src="@Url.Content(ad.AdsImages.FirstOrDefault().ImagePath)" alt="">
+                                                    }
+                                                }
+                                            </a>
+                                        </div>
+                                        <div class="media-body">
+                                            <span><i class="fa fa-clock-o"></i>@ad.WhenAdded.Date.ToString("dd/MMM/yyyy")</span>
+                                            <h5 class="media-heading">
+                                                <a href="@Url.Action("ViewAd","Ads", new { id=ad.PostId})">@ad.Title</a>
+                                            </h5>
+                                            <p class="price">
+                                                Price : <span class="color">
+                                                    RS: @ad.Price
+
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                }
+                            }
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 match-height">
+                    <div class="widget-box">
+                        <div class="widget-title"><h4>Contact Detail</h4></div>
+                        <div class="widget-content">
+                            <div class="contact-info">
+                                <div class="contact-info-box">
+                                    <i class="fa fa-envelope"></i>
+                                </div>
+                                <div class="contact-info-box">
+                                    <p>dummy@gmail.com</p>
+                                </div>
+                            </div>
+                            <div class="contact-info">
+                                <div class="contact-info-box">
+                                    <i class="fa fa-phone"></i>
+                                </div>
+                                <div class="contact-info-box">
+                                    <p>0320000000<br />0321000000</p>
+                                </div>
+                            </div>
+                            <div class="contact-info">
+                                <div class="contact-info-box">
+                                    <i class="fa fa-map-marker"></i>
+                                </div>
+                                <div class="contact-info-box">
+                                    <p>Lahore 54000</p>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div><!--row-->
+        </div><!--container-->
+    </footer>
+    <section class="footer-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-sm-6">
+                    <p>All copyrights reserved © 2020 - Design & Development by <a href="@Url.Action("Index","Home")">BizSol</a></p>
+                </div>
+                <div class="col-lg-6 col-sm-6">
+                    <ul class="footer-bottom-social-icon">
+                        <li><span>Follow Us :</span></li>
+
+                        <li>
+                            <a href="#" class="rounded text-center" target="_blank">
+                                <i class="fa fa-facebook"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="rounded text-center" target="_blank">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="rounded text-center" target="_blank">
+                                <i class="fa fa-google-plus"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div><!--row-->
+        </div><!--container-->
+        <style>
+            @@media (min-width:320px) {
+                #btnbtnsearch {
+                    width: 100% !important;
+                }
+            }
+
+            @@media (min-width:480px) {
+                #btnbtnsearch {
+                    width: 100% !important;
+                }
+            }
+        </style>
+    </section>
+
+
+
+    <a href="#" id="back-to-top" title="Back to top" class="social-icon social-icon-md"><i class="fa fa-angle-double-up removeMargin"></i></a>
+
+
+
+
+
+
+
+
+
+
+    <script type="text/html" id="tmpl-media-frame">
+        <div class="media-frame-title" id="media-frame-title"></div>
+        <div class="media-frame-menu"></div>
+        <div class="media-frame-router"></div>
+        <div class="media-frame-content"></div>
+        <div class="media-frame-toolbar"></div>
+        <div class="media-frame-uploader"></div>
+    </script>
+
+    <script type="text/html" id="tmpl-media-modal">
+
+        <div tabindex="0" class="media-modal wp-core-ui" role="dialog" aria-modal="true" aria-labelledby="media-frame-title">
+            <# if ( data.hasCloseButton ) { #>
+                <button type="button" class="media-modal-close"><span class="media-modal-icon"><span class="screen-reader-text">Close dialog</span></span></button>
+                <# } #>
+                    <div class="media-modal-content" role="document"></div>
+        </div>
+        <div class="media-modal-backdrop"></div>
+    </script>
+
+    <script type="text/html" id="tmpl-crop-content">
+
+        <img class="crop-image" src="{{ data.url }}" alt="Image crop area preview. Requires mouse interaction.">
+        <div class="upload-errors"></div>
+    </script>
+
+    <script type="text/html" id="tmpl-site-icon-preview">
+        <h2>Preview</h2>
+        <strong aria-hidden="true">As a browser icon</strong>
+        <div class="favicon-preview">
+            <img src="#" class="browser-preview" width="182" height="" alt="" />
+
+            <div class="favicon">
+                <img id="preview-favicon" src="{{ data.url }}" alt="Preview as a browser icon" />
+            </div>
+            <span class="browser-title" aria-hidden="true">Classiera Classified Ads WordPress Theme</span>
+        </div>
+
+        <strong aria-hidden="true">As an app icon</strong>
+        <div class="app-icon-preview">
+            <img id="preview-app-icon" src="{{ data.url }}" alt="Preview as an app icon" />
+        </div>
+    </script>
+
+    <script type="text/javascript">
+        var c = document.body.className;
+        c = c.replace(/woocommerce-no-js/, 'woocommerce-js');
+        document.body.className = c;
+    </script>
+    <script type="text/javascript">
+        var wc_product_block_data = JSON.parse(decodeURIComponent('%7B%22min_columns%22%3A1%2C%22max_columns%22%3A6%2C%22default_columns%22%3A3%2C%22min_rows%22%3A1%2C%22max_rows%22%3A6%2C%22default_rows%22%3A1%2C%22thumbnail_size%22%3A300%2C%22placeholderImgSrc%22%3A%22http%3A%5C%2F%5C%2Fdemo.joinwebs.com%5C%2Fclassiera%5C%2Fpearl%5C%2Fwp-content%5C%2Fuploads%5C%2Fwoocommerce-placeholder.png%22%2C%22min_height%22%3A500%2C%22default_height%22%3A500%2C%22isLargeCatalog%22%3Afalse%2C%22limitTags%22%3Afalse%2C%22hasTags%22%3Atrue%2C%22productCategories%22%3A%5B%7B%22term_id%22%3A124%2C%22name%22%3A%22Uncategorized%22%2C%22slug%22%3A%22uncategorized%22%2C%22term_group%22%3A0%2C%22term_taxonomy_id%22%3A124%2C%22taxonomy%22%3A%22product_cat%22%2C%22description%22%3A%22%22%2C%22parent%22%3A0%2C%22count%22%3A0%2C%22filter%22%3A%22raw%22%2C%22link%22%3A%22http%3A%5C%2F%5C%2Fdemo.joinwebs.com%5C%2Fclassiera%5C%2Fpearl%5C%2Fproduct-category%5C%2Funcategorized%5C%2F%22%7D%2C%7B%22term_id%22%3A88%2C%22name%22%3A%22Accessories%22%2C%22slug%22%3A%22accessories%22%2C%22term_group%22%3A0%2C%22term_taxonomy_id%22%3A88%2C%22taxonomy%22%3A%22product_cat%22%2C%22description%22%3A%22%22%2C%22parent%22%3A0%2C%22count%22%3A1%2C%22filter%22%3A%22raw%22%2C%22link%22%3A%22http%3A%5C%2F%5C%2Fdemo.joinwebs.com%5C%2Fclassiera%5C%2Fpearl%5C%2Fproduct-category%5C%2Faccessories%5C%2F%22%7D%2C%7B%22term_id%22%3A99%2C%22name%22%3A%22Computer%22%2C%22slug%22%3A%22computer%22%2C%22term_group%22%3A0%2C%22term_taxonomy_id%22%3A99%2C%22taxonomy%22%3A%22product_cat%22%2C%22description%22%3A%22%22%2C%22parent%22%3A0%2C%22count%22%3A1%2C%22filter%22%3A%22raw%22%2C%22link%22%3A%22http%3A%5C%2F%5C%2Fdemo.joinwebs.com%5C%2Fclassiera%5C%2Fpearl%5C%2Fproduct-category%5C%2Fcomputer%5C%2F%22%7D%2C%7B%22term_id%22%3A96%2C%22name%22%3A%22Home%20Kitchen%22%2C%22slug%22%3A%22home-kitchen%22%2C%22term_group%22%3A0%2C%22term_taxonomy_id%22%3A96%2C%22taxonomy%22%3A%22product_cat%22%2C%22description%22%3A%22%22%2C%22parent%22%3A0%2C%22count%22%3A1%2C%22filter%22%3A%22raw%22%2C%22link%22%3A%22http%3A%5C%2F%5C%2Fdemo.joinwebs.com%5C%2Fclassiera%5C%2Fpearl%5C%2Fproduct-category%5C%2Fhome-kitchen%5C%2F%22%7D%2C%7B%22term_id%22%3A92%2C%22name%22%3A%22Mens%22%2C%22slug%22%3A%22mens%22%2C%22term_group%22%3A0%2C%22term_taxonomy_id%22%3A92%2C%22taxonomy%22%3A%22product_cat%22%2C%22description%22%3A%22%22%2C%22parent%22%3A0%2C%22count%22%3A3%2C%22filter%22%3A%22raw%22%2C%22link%22%3A%22http%3A%5C%2F%5C%2Fdemo.joinwebs.com%5C%2Fclassiera%5C%2Fpearl%5C%2Fproduct-category%5C%2Fmens%5C%2F%22%7D%2C%7B%22term_id%22%3A95%2C%22name%22%3A%22Womens%22%2C%22slug%22%3A%22womens%22%2C%22term_group%22%3A0%2C%22term_taxonomy_id%22%3A95%2C%22taxonomy%22%3A%22product_cat%22%2C%22description%22%3A%22%22%2C%22parent%22%3A0%2C%22count%22%3A2%2C%22filter%22%3A%22raw%22%2C%22link%22%3A%22http%3A%5C%2F%5C%2Fdemo.joinwebs.com%5C%2Fclassiera%5C%2Fpearl%5C%2Fproduct-category%5C%2Fwomens%5C%2F%22%7D%5D%2C%22homeUrl%22%3A%22http%3A%5C%2F%5C%2Fdemo.joinwebs.com%5C%2Fclassiera%5C%2Fpearl%5C%2F%22%7D'));
+    </script>
+    <script type='text/javascript'>
+        /* <![CDATA[ */
+        var thickboxL10n = { "next": "Next >", "prev": "< Prev", "image": "Image", "of": "of", "close": "Close", "noiframes": "This feature requires inline frames. You have iframes disabled or your browser does not support them.", "loadingAnimation": "http:\/\/demo.joinwebs.com\/classiera\/pearl\/wp-includes\/js\/thickbox\/loadingAnimation.gif" };
+        /* ]]> */
+    </script>
+
+
+    <script type='text/javascript'>
+        /* <![CDATA[ */
+        var wc_add_to_cart_params = { "ajax_url": "\/classiera\/pearl\/wp-admin\/admin-ajax.php", "wc_ajax_url": "\/classiera\/pearl\/?wc-ajax=%%endpoint%%", "i18n_view_cart": "View cart", "cart_url": "http:\/\/demo.joinwebs.com\/classiera\/pearl\/cart\/", "is_cart": "", "cart_redirect_after_add": "no" };
+        /* ]]> */
+    </script>
+
+
+    <script type='text/javascript'>
+        /* <![CDATA[ */
+        var woocommerce_params = { "ajax_url": "\/classiera\/pearl\/wp-admin\/admin-ajax.php", "wc_ajax_url": "\/classiera\/pearl\/?wc-ajax=%%endpoint%%" };
+        /* ]]> */
+    </script>
+
+    <script type='text/javascript'>
+        /* <![CDATA[ */
+        var wc_cart_fragments_params = { "ajax_url": "\/classiera\/pearl\/wp-admin\/admin-ajax.php", "wc_ajax_url": "\/classiera\/pearl\/?wc-ajax=%%endpoint%%", "cart_hash_key": "wc_cart_hash_4a064896e76a2bb9e68aa57c0132d608", "fragment_name": "wc_fragments_4a064896e76a2bb9e68aa57c0132d608", "request_timeout": "5000" };
+        /* ]]> */
+    </script>
+
+
+
+
+    <script type='text/javascript'>
+        /* <![CDATA[ */
+        var _wpUtilSettings = { "ajax": { "url": "\/classiera\/pearl\/wp-admin\/admin-ajax.php" } };
+        /* ]]> */
+    </script>
+
+
+    <script type='text/javascript'>
+        /* <![CDATA[ */
+        var _wpMediaModelsL10n = { "settings": { "ajaxurl": "\/classiera\/pearl\/wp-admin\/admin-ajax.php", "post": { "id": 0 } } };
+        /* ]]> */
+    </script>
+
+    <script type='text/javascript'>
+        /* <![CDATA[ */
+        var pluploadL10n = { "queue_limit_exceeded": "You have attempted to queue too many files.", "file_exceeds_size_limit": "%s exceeds the maximum upload size for this site.", "zero_byte_file": "This file is empty. Please try another.", "invalid_filetype": "Sorry, this file type is not permitted for security reasons.", "not_an_image": "This file is not an image. Please try another.", "image_memory_exceeded": "Memory exceeded. Please try another smaller file.", "image_dimensions_exceeded": "This is larger than the maximum size. Please try another.", "default_error": "An error occurred in the upload. Please try again later.", "missing_upload_url": "There was a configuration error. Please contact the server administrator.", "upload_limit_exceeded": "You may only upload 1 file.", "http_error": "HTTP error.", "upload_failed": "Upload failed.", "big_upload_failed": "Please try uploading this file with the %1$sbrowser uploader%2$s.", "big_upload_queued": "%s exceeds the maximum upload size for the multi-file uploader when used in your browser.", "io_error": "IO error.", "security_error": "Security error.", "file_cancelled": "File canceled.", "upload_stopped": "Upload stopped.", "dismiss": "Dismiss", "crunching": "Crunching\u2026", "deleted": "moved to the trash.", "error_uploading": "\u201c%s\u201d has failed to upload." };
+        var _wpPluploadSettings = { "defaults": { "file_data_name": "async-upload", "url": "\/classiera\/pearl\/wp-admin\/async-upload.php", "filters": { "max_file_size": "268435456b", "mime_types": [{ "extensions": "jpg,jpeg,jpe,gif,png,bmp,tiff,tif,ico,asf,asx,wmv,wmx,wm,avi,divx,flv,mov,qt,mpeg,mpg,mpe,mp4,m4v,ogv,webm,mkv,3gp,3gpp,3g2,3gp2,txt,asc,c,cc,h,srt,csv,tsv,ics,rtx,css,vtt,dfxp,mp3,m4a,m4b,aac,ra,ram,wav,ogg,oga,flac,mid,midi,wma,wax,mka,rtf,pdf,class,tar,zip,gz,gzip,rar,7z,psd,xcf,doc,pot,pps,ppt,wri,xla,xls,xlt,xlw,mdb,mpp,docx,docm,dotx,dotm,xlsx,xlsm,xlsb,xltx,xltm,xlam,pptx,pptm,ppsx,ppsm,potx,potm,ppam,sldx,sldm,onetoc,onetoc2,onetmp,onepkg,oxps,xps,odt,odp,ods,odg,odc,odb,odf,wp,wpd,key,numbers,pages,redux" }] }, "multipart_params": { "action": "upload-attachment", "_wpnonce": "178023fc80" } }, "browser": { "mobile": false, "supported": true }, "limitExceeded": false };
+        /* ]]> */
+    </script>
+
+
+
+
+
+
+    <script type='text/javascript'>
+        /* <![CDATA[ */
+        var wpApiSettings = { "root": "http:\/\/demo.joinwebs.com\/classiera\/pearl\/wp-json\/", "nonce": "2276c2f260", "versionString": "wp\/v2\/" };
+        /* ]]> */
+    </script>
+
+    <script type='text/javascript'>
+        /* <![CDATA[ */
+        var _wpMediaViewsL10n = { "url": "URL", "addMedia": "Add Media", "search": "Search", "select": "Select", "cancel": "Cancel", "update": "Update", "replace": "Replace", "remove": "Remove", "back": "Back", "selected": "%d selected", "dragInfo": "Drag and drop to reorder media files.", "uploadFilesTitle": "Upload Files", "uploadImagesTitle": "Upload Images", "mediaLibraryTitle": "Media Library", "insertMediaTitle": "Add Media", "createNewGallery": "Create a new gallery", "createNewPlaylist": "Create a new playlist", "createNewVideoPlaylist": "Create a new video playlist", "returnToLibrary": "\u2190 Return to library", "allMediaItems": "All media items", "allDates": "All dates", "noItemsFound": "No items found.", "insertIntoPost": "Insert into post", "unattached": "Unattached", "mine": "Mine", "trash": "Trash", "uploadedToThisPost": "Uploaded to this post", "warnDelete": "You are about to permanently delete this item from your site.\nThis action cannot be undone.\n 'Cancel' to stop, 'OK' to delete.", "warnBulkDelete": "You are about to permanently delete these items from your site.\nThis action cannot be undone.\n 'Cancel' to stop, 'OK' to delete.", "warnBulkTrash": "You are about to trash these items.\n  'Cancel' to stop, 'OK' to delete.", "bulkSelect": "Bulk Select", "trashSelected": "Move to Trash", "restoreSelected": "Restore from Trash", "deletePermanently": "Delete Permanently", "apply": "Apply", "filterByDate": "Filter by date", "filterByType": "Filter by type", "searchMediaLabel": "Search Media", "searchMediaPlaceholder": "Search media items...", "noMedia": "No media files found.", "attachmentDetails": "Attachment Details", "insertFromUrlTitle": "Insert from URL", "setFeaturedImageTitle": "Featured Image", "setFeaturedImage": "Set featured image", "createGalleryTitle": "Create Gallery", "editGalleryTitle": "Edit Gallery", "cancelGalleryTitle": "\u2190 Cancel Gallery", "insertGallery": "Insert gallery", "updateGallery": "Update gallery", "addToGallery": "Add to gallery", "addToGalleryTitle": "Add to Gallery", "reverseOrder": "Reverse order", "imageDetailsTitle": "Image Details", "imageReplaceTitle": "Replace Image", "imageDetailsCancel": "Cancel Edit", "editImage": "Edit Image", "chooseImage": "Choose Image", "selectAndCrop": "Select and Crop", "skipCropping": "Skip Cropping", "cropImage": "Crop Image", "cropYourImage": "Crop your image", "cropping": "Cropping\u2026", "suggestedDimensions": "Suggested image dimensions: %1$s by %2$s pixels.", "cropError": "There has been an error cropping your image.", "audioDetailsTitle": "Audio Details", "audioReplaceTitle": "Replace Audio", "audioAddSourceTitle": "Add Audio Source", "audioDetailsCancel": "Cancel Edit", "videoDetailsTitle": "Video Details", "videoReplaceTitle": "Replace Video", "videoAddSourceTitle": "Add Video Source", "videoDetailsCancel": "Cancel Edit", "videoSelectPosterImageTitle": "Select Poster Image", "videoAddTrackTitle": "Add Subtitles", "playlistDragInfo": "Drag and drop to reorder tracks.", "createPlaylistTitle": "Create Audio Playlist", "editPlaylistTitle": "Edit Audio Playlist", "cancelPlaylistTitle": "\u2190 Cancel Audio Playlist", "insertPlaylist": "Insert audio playlist", "updatePlaylist": "Update audio playlist", "addToPlaylist": "Add to audio playlist", "addToPlaylistTitle": "Add to Audio Playlist", "videoPlaylistDragInfo": "Drag and drop to reorder videos.", "createVideoPlaylistTitle": "Create Video Playlist", "editVideoPlaylistTitle": "Edit Video Playlist", "cancelVideoPlaylistTitle": "\u2190 Cancel Video Playlist", "insertVideoPlaylist": "Insert video playlist", "updateVideoPlaylist": "Update video playlist", "addToVideoPlaylist": "Add to video playlist", "addToVideoPlaylistTitle": "Add to Video Playlist", "attachmentsList": "Attachments list", "settings": { "tabs": [], "tabUrl": "http:\/\/demo.joinwebs.com\/classiera\/pearl\/wp-admin\/media-upload.php?chromeless=1", "mimeTypes": { "image": "Images", "audio": "Audio", "video": "Video" }, "captions": true, "nonce": { "sendToEditor": "38c14a369d" }, "post": { "id": 0 }, "defaultProps": { "link": "", "align": "", "size": "" }, "attachmentCounts": { "audio": 1, "video": 1 }, "oEmbedProxyUrl": "http:\/\/demo.joinwebs.com\/classiera\/pearl\/wp-json\/oembed\/1.0\/proxy", "embedExts": ["mp3", "ogg", "flac", "m4a", "wav", "mp4", "m4v", "webm", "ogv", "flv"], "embedMimes": { "mp3": "audio\/mpeg", "ogg": "audio\/ogg", "flac": "audio\/flac", "m4a": "audio\/mpeg", "wav": "audio\/wav", "mp4": "video\/mp4", "m4v": "video\/mp4", "webm": "video\/webm", "ogv": "video\/ogg", "flv": "video\/x-flv" }, "contentWidth": null, "months": [{ "year": "2019", "month": "5", "text": "May 2019" }, { "year": "2019", "month": "2", "text": "February 2019" }, { "year": "2018", "month": "11", "text": "November 2018" }, { "year": "2018", "month": "9", "text": "September 2018" }, { "year": "2018", "month": "8", "text": "August 2018" }, { "year": "2018", "month": "4", "text": "April 2018" }, { "year": "2018", "month": "1", "text": "January 2018" }, { "year": "2017", "month": "12", "text": "December 2017" }, { "year": "2017", "month": "6", "text": "June 2017" }, { "year": "2017", "month": "5", "text": "May 2017" }], "mediaTrash": 0 } };
+/* ]]> */
+    </script>
+
+
+    <script type='text/javascript' src='https://maps.googleapis.com/maps/api/js?key=AIzaSyD_eedfelAnZq5O5B9nEYJvLeepSW6uDHM&#038;language=en&#038;v=3.exp&#038;ver=2014-07-18'></script>
+
+
+    <script type="text/javascript" defer src="http://demo.joinwebs.com/classiera/pearl/wp-content/cache/autoptimize/js/autoptimize_19a7a0ced49f7549dd6823bc3d4fa544.js"></script>
+
+
+</body>
+</html>
+
+

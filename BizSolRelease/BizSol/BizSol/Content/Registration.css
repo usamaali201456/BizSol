@@ -1,0 +1,88 @@
+﻿bg {
+    background-color: #465fd7;
+}
+
+.container {
+    background-image: linear-gradient(to right,#465fd7,#7f8bb1);
+  
+}
+
+.register-left {
+    text-align: center;
+    color: #fff;
+    padding: 30px;
+}
+
+    .register-left img {
+        width: 80px;
+        margin-top: 90px;
+        animation: mover is infinite alternate;
+    }
+
+    .register-left > h3 {
+        margin-top: 100px
+    }
+
+    .register-left > p {
+        padding: 20px 20px 0px;
+        margin-top: 10px;
+    }
+
+    .register-left .btn-primary {
+        border: none;
+        width: 100px;
+        background: #f8f8f8;
+        font-weight: 600;
+        color: #555;
+        margin-top: 50px;
+        padding: 10px;
+    }
+
+        .register-left .btn-primary:hover {
+            background: #000;
+            color: white;
+        }
+
+.register-right {
+    border: none;
+    background: #7f8bb1;
+    border-top-left-radius: 10% 50%;
+    border-bottom-left-radius: 10% 50%;
+    padding: 30px;
+}
+
+    .register-right > h2 {
+        text-align: center;
+        margin-bottom: 10px;
+        color: #555;
+    }
+
+.register-form {
+    padding: 30px;
+}
+
+.register-right .btn-default {
+    float: right;
+    border: none;
+    width: 100px;
+    background: #fff;
+    font-weight: 600;
+    color: #555;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+    .register-right .btn-default:hover {
+        background: green;
+        color: white;
+    }
+
+@keyframes mover {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-20px);
+    }
+}

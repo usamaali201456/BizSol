@@ -1,0 +1,117 @@
+﻿@using BizSol.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+    Layout = "~/Views/Shared/_LayoutWithOutSearch.cshtml";
+}
+
+<div class="mobile-submit affix">
+    <ul class="list-unstyled list-inline mobile-app-button">
+        <li>
+            <a href="@Url.Action("Login","Account")">
+                <i class="fa fa-sign-in"></i>
+                <span>Login</span>
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("Register","Account")">
+                <i class="fa fa-edit"></i>
+                <span>Submit Ad</span>
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("Register","Account")">
+                <i class="fa fa-user-o"></i>
+                <span>Get Registered</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<!-- Mobile App button -->
+
+<section class="inner-page-content border-bottom top-pad-50">
+    <div class="login-register login-register-v1">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 col-md-11 col-sm-12 center-block">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="classiera-login-register-heading border-bottom text-center">
+                                <h3 class="text-uppercase">Login</h3>
+                            </div>
+                        </div><!--col-lg-12-->
+                    </div><!--row-->
+                    <div class="row">
+                        <div class="col-lg-8 center-block">
+                            <form data-toggle="validator" method="POST" onclick="location.href'@Url.Action("Login","Account")'">
+                                @Html.AntiForgeryToken()
+                                @if (ViewBag.message != null)
+                                {
+
+                                    <div class="alert alert-danger" style="text-align:center;margin-left:15%">
+                                        @ViewBag.message
+                                    </div>
+                                }
+                                @Html.ValidationSummary("", new { @class = "text-danger" })
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-lg-3 single-label">
+                                            <label for="username">Email : <span class="text-danger">*</span></label>
+                                        </div><!--col-lg-3-->
+                                        <div class="col-lg-9">
+                                            <div class="inner-addon left-addon">
+                                                <i class="left-addon form-icon fa fa-lock"></i>
+                                                <input type="email" id="username" name="Email" class="form-control form-control-md sharp-edge" placeholder="Your Email">
+                                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                                <div class="help-block with-errors"></div>
+                                            </div>
+                                        </div><!--col-lg-9-->
+                                    </div><!--row-->
+                                </div><!--UserName-->
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-lg-3 single-label">
+                                            <label for="password">Password : <span class="text-danger">*</span></label>
+                                        </div>
+                                        <div class="col-lg-9">
+                                            <div class="inner-addon left-addon">
+                                                <i class="left-addon form-icon fa fa-lock"></i>
+                                                <input id="password" type="password" name="Password" @*name="@Model.Password"*@ class="form-control form-control-md sharp-edge" placeholder="Enter Password">
+                                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                                <div class="help-block with-errors"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!--Password-->
+                                <div class="col-lg-9 pull-right flip">
+                                    <div class="form-group clearfix">
+                                        @*<div class="checkbox pull-left flip">
+                                           
+                                            <input type="checkbox" name="RememberMe" id="remember">
+
+                                            @Html.LabelFor(m => m.RememberMe)
+                                        </div>*@
+                                        <p class="forget-pass pull-right flip">
+                                            <a href="@Url.Action("ForgotPassword","Account")">Forget Password?</a>
+                                        </p>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="hidden" name="submit" value="Login" id="submit" />
+                                        <button type="submit" name="op" class="btn btn-primary sharp btn-md btn-style-one">Login now</button>
+                                    </div>
+                                    <div class="form-group">
+                                        <p>
+                                            If you don’t have account?
+                                            <a href="@Url.Action("Register","Account")">Create an account.</a>
+                                        </p>
+                                    </div>
+                                </div><!--Rememberme-->
+                            </form>
+                        </div><!--col-lg-8-->
+                    </div><!--row-->
+                </div><!--col-lg-10-->
+            </div><!--row-->
+        </div><!--container-->
+    </div><!--login-register login-register-v1-->
+</section>
+

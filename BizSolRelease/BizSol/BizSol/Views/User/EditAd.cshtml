@@ -1,0 +1,119 @@
+﻿@model BizSol.Entities.AdPost
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/CustomContant/ImgSelect_StyleSheet1.css" rel="stylesheet" />
+    <link href="~/Content/Category.css" rel="stylesheet" />
+</head>
+<body>
+    @using (Html.BeginForm("EditAd", "User", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>AdPost</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.PostId)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Condition, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Condition, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Condition, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @DateTime.Now
+
+            <div class="form-group">
+                <label class="control-label col-md-2">City Name</label>
+                <div class="col-md-10">
+                    @Html.DropDownListFor(x => x.FkCityId, ViewBag.Citieslist as SelectList, "--select--", new { @class = "form-control" })
+                </div>
+                <span style="color:red">   @Html.ValidationMessageFor(x => x.cat_Id) </span>
+            </div>
+            <br />
+            <p id="error">Height and Weidth should be Minimum 300PX</p>
+            <br />
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8" style="margin:2px;">
+                            <div class="Product-img">
+                                <input type="file" multiple class="hidden" name="image_file" id="Upload_img" accept="image/*" />
+                                <img src="@Url.Content(Model.Image)" class="img-responsive" id="product_img" />
+                                <div>
+                                    <div class="remove-photo">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            @ViewBag.error
+
+                            <div class="Product-img2" style="margin-left:10px;">
+                                <input type="file" multiple class="hidden" name="image_file" id="Upload_img2" accept="image/*" />
+                                <img src="@Url.Content(Model.Image1)" class="img-responsive" id="product_img2" />
+
+                                <div>
+                                    <div class="remove-photo2">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="Product-img3" style="margin-left:10px;">
+                                <input type="file" multiple class="hidden" name="image_file" id="Upload_img3" accept="image/*" />
+                                <img src="@Url.Content(Model.Image2)" class="img-responsive" id="product_img3" />
+
+                                <div>
+                                    <div class="remove-photo3">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Detail, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Detail, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Detail, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Edit" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+</body>
+</html>

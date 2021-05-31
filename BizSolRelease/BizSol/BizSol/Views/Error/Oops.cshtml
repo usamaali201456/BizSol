@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "Error";
+    Layout = null;
+}
+<head>    
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<section>
+    <div class="container">
+        <div class="row">
+            <img class="img-responsive  text-center" src="~/Images/404errorpage.jpg" />
+            @Html.ActionLink("Back to Home", "Index", "Home", null, htmlAttributes: new { @class = "btn btn-primary" })
+        </div>
+
+    </div>
+</section>

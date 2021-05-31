@@ -1,0 +1,145 @@
+﻿@model BizSol.Models.ApplicationUser
+@{
+    Layout = "~/Views/Shared/_LayoutWithOutSearch.cshtml";
+}
+
+<!-- NavBar -->	<!-- Mobile App button -->
+<div class="mobile-submit affix">
+    <ul class="list-unstyled list-inline mobile-app-button">
+        <li>
+            <form id="form4" method="post" action="/Account/LogOff">
+                @Html.AntiForgeryToken()
+                <a onclick="document.getElementById('form4').submit();">
+                    <span>
+                        <i class="fa fa-sign-out"></i>
+                        Log out
+                    </span>
+                </a>
+            </form>
+
+        </li>
+        <li>
+
+            <a href="@Url.Action("showCategory","User")">
+                <i class="fa fa-edit"></i>
+                <span>Submit Ad</span>
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("Usr_profile","User")">
+                <i class="fa fa-user-o"></i>
+                <span>My Account</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<!-- Mobile App button -->
+<section class="user-pages section-gray-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-4">
+                <aside class="section-bg-white affix-top">
+                    <div class="author-info border-bottom">
+                        <div class="media">
+                            <div class="media-left">
+                                <img class="media-object" src="~/Images/1.png" />
+                            </div><!--media-left-->
+                            <div class="media-body">
+                                <h5 class="media-heading text-uppercase">
+                                    @Model.UserName
+                                </h5>
+                                @*<p>Member Since&nbsp;@Model.WhenCreated.Date.ToString("dd/MMM/yyyy")</p>*@
+                                <span><i class="fa fa-circle"></i>Online</span>
+                            </div><!--media-body-->
+                        </div><!--media-->
+                    </div><!--author-info-->
+                    <ul class="user-page-list list-unstyled">
+                        <li class="active">
+                            <a href="@Url.Action("Usr_profile","User")">
+                                <span>
+                                    <i class="fa fa-user"></i>
+                                    About Me
+                                </span>
+                            </a>
+                        </li><!--About-->
+                        <li class="">
+                            <a href="@Url.Action("Usr_All_Ads","User",new { id=Model.Id})">
+                                <span><i class="fa fa-suitcase"></i>My Ads</span>
+
+                            </a>
+                        </li>
+
+
+                        <li class="">
+                           
+                                <a  href="@Url.Action("Edit_usr","User")">
+                                    <span><i class="fa fa-cog"></i>Profile Settings</span>
+                                </a>
+                            
+                        </li><!--Profile Setting-->
+
+                        <li>
+                            <form id="form3" method="post" action="/Account/LogOff">
+                                @Html.AntiForgeryToken()
+                                <a onclick="document.getElementById('form3').submit();">
+                                        <span>
+                                            <i class="fa fa-sign-out"></i>
+                                            Log out
+                                     </span>
+                                </a>
+                            </form>
+
+                        </li><!--Logout-->
+                    </ul><!--user-page-list-->
+                    <div class="user-submit-ad">
+                        <a href="@Url.Action("showCategory","AdPost")" class="btn btn-primary sharp btn-block btn-sm btn-user-submit-ad">
+                            <i class="icon-left fa fa-plus-circle"></i>
+                            POST NEW AD
+                        </a>
+                    </div><!--user-submit-ad-->
+                </aside><!--sideBarAffix-->
+            </div><!--col-lg-3-->
+            <div class="col-lg-9 col-md-8 user-content-height">
+                <div class="user-detail-section section-bg-white">
+                    <!-- about me -->
+                    <div class="about-me">
+                        <h4 class="user-detail-section-heading text-uppercase">About Me</h4>
+                        <p></p>
+                    </div>
+                    <!-- about me -->
+                    <!-- contact details -->
+                    <div class="user-contact-details">
+                        <h4 class="user-detail-section-heading text-uppercase">
+                            Contact Details
+                        </h4>
+                        <ul class="list-unstyled">
+                            <li>
+                                <i class="fa fa-envelope"></i>
+                                @Model.Email
+                            </li>
+                            <li>
+                                <i class="fa fa-phone"></i>
+                                @Model.PhoneNumber
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- contact details -->
+                    <!-- my ads -->
+                    <div class="user-ads user-my-ads">
+                        <h4 class="user-detail-section-heading text-uppercase">
+                            My Ads
+                        </h4>
+                        <div class="user-view-all text-center">
+                            <a href="@Url.Action("Usr_All_Ads","User",new { id=Model.Id})" class="btn btn-primary btn-md btn-style-one sharp">
+                                View All
+                            </a>
+                        </div>
+                    </div>
+                    <!-- my ads -->
+
+                </div>
+            </div>
+        </div><!--row-->
+    </div><!--container-->
+</section>
+<!-- user pages -->

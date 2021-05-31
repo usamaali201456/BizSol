@@ -1,0 +1,74 @@
+﻿@model BizSol.Models.EditUserViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutWithOutSearch.cshtml";
+}
+
+<section class="user-pages section-gray-bg">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-9 col-md-8 user-content-height">
+                <div class="user-detail-section section-bg-white">
+                    <div class="user-ads user-profile-settings">
+                        <h4 class="user-detail-section-heading text-uppercase">
+                            Profile Settings
+                        </h4>
+                        @*<form data-toggle="validator" role="form" id="myform" onclick="location.href'@Url.Action("Edit_usr","User")'" method="POST" enctype="multipart/form-data">*@
+                        @using (Html.BeginForm("Edit_usr", "User", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <!-- user basic information -->
+                            <div class="form-inline row form-inline-margin">
+                                <div class="form-group col-sm-5">
+                                    <label for="first-name">User Name</label>
+                                    <div class="inner-addon">
+                                        @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+
+                                    </div>
+                                </div><!--Firstname-->
+
+                            </div>
+                            <!-- user basic information -->
+                            <!-- Contact Details -->
+                            <h4 class="user-detail-section-heading text-uppercase">
+                                Contact Details
+                            </h4>
+                            <div class="form-inline row form-inline-margin">
+
+                                <div class="form-group col-sm-5">
+                                    <label for="mobile">Mobile Number</label>
+                                    <div class="inner-addon">
+                                        @Html.EditorFor(model => model.Contact, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                    </div>
+                                </div><!--Mobile Number-->
+
+                                <div class="form-group col-sm-5">
+                                    <label for="email">Your Email</label>
+                                    <div class="inner-addon">
+                                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control form-control-sm", @readonly = "readonly" } })
+                                    </div>
+                                </div><!--Your Email-->
+
+                                <div class="form-group col-sm-5">
+                                    
+                                    <div class="inner-addon">
+                                        <a href="/Account/ResetPassword" style="padding:10px;text-decoration:none;color:white;background-color:lightgreen">Update Password</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Contact Details -->
+                            <!-- Update your Password -->
+
+                            <input type="hidden" id="post_nonce_field" name="post_nonce_field" value="4765ee36d5" /><input type="hidden" name="_wp_http_referer" value="/classiera/pearl/profile-settings/" /> <input type="hidden" name="submitted" id="submitted" value="true" />
+                            <button type="submit" name="op" value="update_profile" class="btn btn-primary sharp btn-sm btn-style-one">Update Now</button>
+                            <!-- Update your Password -->
+                        }
+                        @*</form>*@
+                    </div><!--user-ads user-profile-settings-->
+
+                </div><!--user-detail-section-->
+            </div><!--col-lg-9-->
+        </div><!--row-->
+    </div><!--container-->
+</section><!--user-pages section-gray-bg-->

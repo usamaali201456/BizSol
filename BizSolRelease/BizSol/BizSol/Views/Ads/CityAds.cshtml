@@ -1,0 +1,329 @@
+﻿@using BizSol.Models.ViewModels
+@model CityViewModel
+@{
+    ViewBag.Title = "Ads";
+    Layout = "~/Views/Shared/_LayoutWithOutSearch.cshtml";
+
+    int minRange = 0;
+    int maxxRange = 1000000;
+    int randomRange = 0;
+}
+<section class="inner-page-content border-bottom top-pad-50" id="searchdata">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-lg-9">
+                <!--category description section-->
+                <!--category description section-->
+                <!--Google Section-->
+                <!--Google Section-->
+                <!-- advertisement -->
+                <section class="classiera-advertisement advertisement-v5 section-pad-80 border-bottom">
+                    <div class="tab-divs">
+                        <div class="view-head">
+                            <div class="container">
+                                <div class="row">
+
+
+                                </div><!--row-->
+                            </div><!--container-->
+                        </div><!--view-head-->
+                        <div id="adsDiv">
+                            @{
+                                var cityFilterViewModel = new CityFilterViewModel();
+                                cityFilterViewModel.adpost = Model.adpost;
+                                cityFilterViewModel.Pager = Model.Pager;
+                                cityFilterViewModel.categoryId = Model.categoryId;
+                                cityFilterViewModel.cityId = Model.cityId;
+                                cityFilterViewModel.searchTerm = Model.searchTerm;
+
+                                Html.RenderPartial("_cityFilterAds", cityFilterViewModel);
+                            }
+                        </div>
+
+                    </div><!--tab-divs-->
+                </section>				<!-- advertisement -->
+            </div><!--col-md-8-->
+            <div class="col-md-4 col-lg-3">
+                <aside class="sidebar">
+                    <div class="row">
+
+                        <div class="col-lg-12 col-md-12 col-sm-6 match-height">
+                            <div class="widget-box">
+                                <!--SearchForm-->
+                                <form data-toggle="validator" @*role="form" id="myform" onclick="location.href'@Url.Action("Registration","User")'" method="POST" enctype="multipart/form-data"*@>
+
+                                    <div class="search-form border">
+                                        <div class="search-form-main-heading">
+                                            <a href="#innerSearch" role="button" data-toggle="collapse" aria-expanded="true" aria-controls="innerSearch">
+                                                <i class="fa fa-search"></i>
+                                                Advanced Search
+                                            </a>
+                                        </div><!--search-form-main-heading-->
+                                        <div id="innerSearch" class="collapse in classiera__inner">
+                                            <!--Price Range-->
+                                            <div class="inner-search-box">
+                                                <h5 class="inner-search-heading">
+                                                    <i class="fa fa-money" aria-hidden="true"></i>
+                                                    Price Range
+                                                </h5>
+                                                <div class="radio">
+                                                    <!--PriceFirst-->
+                                                    <input id="price-range-1" type="radio" value="0,10000" name="price_range">
+                                                    <label for="price-range-1">
+                                                        0&nbsp;&ndash;&nbsp;
+                                                        10000
+                                                    </label>
+                                                    <!--PriceSecond-->
+                                                    <input id="price-range-2" type="radio" value="10000,50000" name="price_range">
+                                                    <label for="price-range-2">
+                                                        10001&nbsp;&ndash;&nbsp;
+                                                        50000
+                                                    </label>
+                                                    <!--PriceThird-->
+                                                    <input id="price-range-3" type="radio" value="50000,200000" name="price_range">
+                                                    <label for="price-range-3">
+                                                        50001&nbsp;&ndash;&nbsp;
+                                                        200000
+                                                    </label>
+                                                    <!--PriceFourth-->
+                                                    <input id="price-range-4" type="radio" value="200000,500000" name="price_range">
+                                                    <label for="price-range-4">
+                                                        200001&nbsp;&ndash;&nbsp;
+                                                        500000
+                                                    </label>
+                                                    <!--PriceFive-->
+                                                    <input id="price-range-5" type="radio" value="500000,1000000" name="price_range">
+                                                    <label for="price-range-5">
+                                                        500001&nbsp;&ndash;&nbsp;
+                                                        1000000
+                                                    </label>
+                                                    <!--PriceSix-->
+                                                    <input id="price-range-6" type="radio" value="1000000,2000000" name="price_range">
+                                                    <label for="price-range-6">
+                                                        1000001&nbsp;&ndash;&nbsp;
+                                                        2000000
+                                                    </label>
+                                                    <!--PriceSeven-->
+                                                    <input id="price-range-7" type="radio" value="2000000,5000000" name="price_range">
+                                                    <label for="price-range-7">
+                                                        2000001&nbsp;&ndash;&nbsp;
+                                                        5000000
+                                                    </label>
+                                                    <!--PriceEight-->
+                                                    <input id="price-range-8" type="radio" value="5000000,10000000" name="price_range">
+                                                    <label for="price-range-8">
+                                                        5000001&nbsp;&ndash;&nbsp;
+                                                        10000000
+                                                    </label>
+                                                    <!--PriceNine-->
+                                                    <input id="price-range-9" type="radio" value="10000000,50000000" name="price_range">
+                                                    <label for="price-range-9">
+                                                        10000001&nbsp;&ndash;&nbsp;
+                                                        50000000
+                                                    </label>
+                                                    <!--Max Price-->
+                                                    <input id="price-range-10" type="radio" value="50000000,100000000" name="price_range">
+                                                    <label for="price-range-10">
+                                                        50000001&nbsp;&ndash;&nbsp;
+                                                        100000000
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <!--Price Range-->
+                                            <div class="inner-search-box">
+                                                <h5 class="inner-search-heading">
+                                                    <i class="fa fa-tag"></i>
+                                                    Keywords
+                                                </h5>
+                                                <div class="inner-addon right-addon">
+                                                    <i class="right-addon form-icon fa fa-search"></i>
+                                                    <input type="text" name="search" id="search" class="form-control form-control-sm" placeholder="Enter Keyword">
+                                                </div>
+                                            </div><!--Keywords-->
+                                            <!--Locations-->
+
+                                            <div class="inner-search-box">
+                                                @if (Model.cities != null)
+                                                {
+                                                    <h5 class="inner-search-heading">
+                                                        <i class="fa fa-map-marker"></i>
+                                                        Location
+                                                    </h5>
+                                                    <!--SelectCountry-->
+                                                    <div class="inner-addon right-addon">
+                                                        <i class="right-addon form-icon fa fa-sort"></i>
+                                                        <select name="post_location" class="form-control form-control-sm" id="cityList" onchange="getCityValue();">
+                                                            <option value="-1" selected disabled>
+                                                                Select Cities
+                                                            </option>
+                                                            @foreach (var item in Model.cities)
+                                                            {
+                                                                <option value="@item.CityID">@item.CityName</option>
+                                                            }
+                                                        </select>
+                                                        <!--Select City-->
+                                                    </div>
+                                                }
+
+                                                <!--Locations-->
+                                                <!--Categories-->
+
+                                                <div class="inner-search-box">
+                                                    @if (Model.categories != null)
+                                                    {
+                                                        <h5 class="inner-search-heading">
+                                                            <i class="fa fa-folder-open"></i>
+                                                            Categories
+                                                        </h5>
+                                                        <!--SelectCategory-->
+                                                        <div class="inner-addon right-addon">
+                                                            <i class="right-addon form-icon fa fa-sort"></i>
+                                                            <select name='category_name' class='form-control form-control-sm' id="categoryList" onchange="getCategoryValue();">
+                                                                <option value='-1' selected='selected'>Select category</option>
+                                                                @foreach (var item in Model.categories)
+                                                                {
+                                                                    <option class="level-0" value="@item.cat_Id">@item.cat_name</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                        <!--CustomFields-->
+                                                        <!--CustomFields-->
+                                                        <!--Item Condition-->
+                                                    }
+                                                    <div class="inner-search-box-child">
+                                                        <p>Select Condition</p>
+                                                        <div class="radio">
+                                                            <input id="new" type="radio" name="item-condition" value="New">
+                                                            <label for="new">New</label>
+                                                            <input id="used" type="radio" name="item-condition" value="Used">
+                                                            <label for="used">Used</label>
+                                                        </div>
+                                                    </div>
+                                                    <!--Item Condition-->
+                                                    <!--Select Ads Type-->
+                                                </div><!--inner-search-box-->
+
+
+
+                                                <button type="button" id="searchBtn" name="search" class="btn btn-primary sharp btn-sm btn-style-one btn-block" value="Search">Search</button>
+                                                <a href="@Url.Action("CityAds","Ads",new {cityId = Model.cityId})" class="btn btn-primary sharp btn-sm btn-style-one btn-block">Reset</a>
+
+                                            </div><!--innerSearch-->
+                                        </div><!--search-form-->
+                                    </div>
+                                </form>
+                                <!--SearchForm-->
+                            </div>
+                        </div>
+                    </div><!--row-->
+                </aside>
+            </div><!--row-->
+        </div><!--row-->
+    </div><!--container-->
+</section>
+
+<div id="loading-bar" style="display:none;" class="text-center"> <img src="~/Images/reloader.gif" alt="Loader" /> </div>
+<style>
+    #loading-bar {
+        display: none;
+        text-align: center;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        ;
+        background-color: rgba(255, 255,255,0.8);
+        background-repeat: no-repeat;
+    }
+</style>
+
+<script>
+    function showLoader() {
+        $("#loading-bar").show()
+        $("#loading-bar").delay(1500).fadeOut("slow");
+    };
+    function hideLoader() {
+        $("#loading-bar").hide();
+    }
+
+    function GetData(dUrl) {
+        //console.log("Slide Call");
+        //showLoader();
+        $.ajax({
+
+            url: dUrl,
+
+            data: {
+                cityId: cityValue,
+                categoryId: categoryValue,
+                search: searchValue
+
+            }
+        })
+            .done(function (response) {
+                $("#adsDiv").html(response);
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log("fail");
+                alert("FAIL");
+            });
+    }
+    var cityValue;
+    var categoryValue;
+    function getCityValue() {
+        debugger;
+        cityValue = document.getElementById("cityList").value;
+        }
+    function getCategoryValue() {
+        debugger;
+        categoryValue = document.getElementById("categoryList").value;
+    }
+
+
+
+        $("#searchBtn").click(function () {
+            showLoader();
+            var searchValue = $("#search").val();
+            var conditionValue = $('input[name=item-condition]:checked').val();
+            if (conditionValue == 'undefined') {
+                conditionValue = null;
+            }
+            var radioValue = $('input[name=price_range]:checked').val();
+            if (typeof radioValue === 'undefined') {
+                minPrice = null;
+                maxPrice = null;
+            } else {
+                var splitedValue = radioValue.split(',');
+                var minPrice = splitedValue[0];
+                var maxPrice = splitedValue[1];
+            }
+
+            $.ajax({
+            url: '@Url.Action("_cityFilterAds", "Ads")',
+            data: {
+                categoryId: @Model.categoryId,
+                cityId: @Model.cityId,
+                selectedCityId: cityValue,
+                selectedCategoryId: categoryValue,
+                search: searchValue,
+                minimumPrice: minPrice,
+                maximumPrice: maxPrice,
+                condition: conditionValue
+            }
+            })
+                .done(function (response) {
+                    hideLoader();
+                $("#adsDiv").html(response);
+                //focusAction("searchdata");
+                //alert("Done");
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Fail");
+            });
+
+        });
+
+</script>

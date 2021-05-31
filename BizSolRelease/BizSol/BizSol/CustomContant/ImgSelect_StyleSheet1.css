@@ -1,0 +1,108 @@
+﻿body {
+}
+
+.Product-img {
+    border: 1px solid #808080;
+    border-radius: 5px;
+    float: left;
+}
+
+    .Product-img img {
+        height: 100px;
+        width: 100px;
+        cursor: pointer;
+    }
+
+    .Product-img .remove-photo {
+        position: absolute;
+        top: 0px;
+        right: 75px;
+        padding: 5px;
+        cursor: pointer;
+    }
+
+        .Product-img .remove-photo .glyphicon-remove {
+            color: #808080;
+            transform: scaleY(0);
+        }
+
+        .Product-img .remove-photo:hover .glyphicon-remove {
+            color: #000000;
+        }
+
+    .Product-img:hover .glyphicon-remove {
+        transform: scaleY(1);
+    }
+
+
+/*Styling for 2nd image*/
+
+
+.Product-img2 {
+    border: 1px solid #808080;
+    border-radius: 5px;
+    float: left;
+}
+
+    .Product-img2 img {
+        height: 100px;
+        width: 100px;
+        cursor: pointer;
+    }
+
+    .Product-img2 .remove-photo2 {
+        position: absolute;
+        top: 0px;
+        right: 75px;
+        padding: 5px;
+        cursor: pointer;
+    }
+
+        .Product-img2 .remove-photo2 .glyphicon-remove {
+            color: #808080;
+            transform: scaleY(0);
+        }
+
+        .Product-img2 .remove-photo2:hover .glyphicon-remove {
+            color: #000000;
+        }
+
+    .Product-img2:hover .glyphicon-remove {
+        transform: scaleY(1);
+    }
+
+/*Styling for 3rd image*/
+
+
+.Product-img3 {
+    border: 1px solid #808080;
+    border-radius: 5px;
+    float: left;
+}
+
+    .Product-img3 img {
+        height: 100px;
+        width: 100px;
+        cursor: pointer;
+    }
+
+    .Product-img3 .remove-photo3 {
+        position: absolute;
+        top: 0px;
+        right: 75px;
+        padding: 5px;
+        cursor: pointer;
+    }
+
+        .Product-img3 .remove-photo3 .glyphicon-remove {
+            color: #808080;
+            transform: scaleY(0);
+        }
+
+        .Product-img3 .remove-photo3:hover .glyphicon-remove {
+            color: #000000;
+        }
+
+    .Product-img3:hover .glyphicon-remove {
+        transform: scaleY(1);
+    }

@@ -1,0 +1,309 @@
+﻿@using BizSol.Models.ViewModels
+@model HomeViewModel
+
+
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<section class="section-pad-80 category-v5">
+    <div class="section-heading-v5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-9 center-block">
+                    <h1 class="text-capitalize">Ads categories</h1>
+                </div><!--col-lg-7-->
+            </div><!--row-->
+        </div><!--container-->
+
+    </div><!--section-heading-v1-->
+    <div class="container">
+        <ul class="list-inline list-unstyled categories">
+            <li class="match-height">
+                <div class="category-content">
+                    <i style="color:#46b75d;" class="zmdi zmdi-car" @*class="zmdi zmdi-car"*@></i>
+                    <h4><a href="@Url.Action("Index","Ads",new { categoryId=3})">Vehicle</a></h4>
+                </div><!--category-box-->
+            </li><!--col-lg-4-->
+            <li class="match-height">
+                <div class="category-content">
+                    <i style="color:#00bc9d;" class="fa fa-motorcycle"></i>
+                    <h4><a href="@Url.Action("Index","Ads",new { categoryId=1})">Bikes</a></h4>
+                </div><!--category-box-->
+            </li><!--col-lg-4-->
+            <li class="match-height">
+                <div class="category-content">
+                    <i style="color:#39444c;" class="zmdi zmdi-tv" @*class="zmdi zmdi-radio"*@></i>
+                    <h4><a href="@Url.Action("Index","Ads",new { categoryId=4})">Electronics</a></h4>
+                </div><!--category-box-->
+            </li><!--col-lg-4-->
+            <li class="match-height">
+                <div class="category-content">
+                    <i style="color:#86267e;" class="zmdi zmdi-male-female" @*class="zmdi zmdi-radio"*@></i>
+                    <h4><a href="@Url.Action("Index","Ads",new { categoryId=6})">Dresses</a></h4>
+                </div><!--category-box-->
+            </li><!--col-lg-4-->
+            <li class="match-height">
+                <div class="category-content">
+                    <i style="color:#e76b77;" class="fa fa-mobile-phone" @*class="zmdi zmdi-seat"*@></i>
+                    <h4><a href="@Url.Action("Index","Ads",new { categoryId=2})">Mobile</a></h4>
+                </div><!--category-box-->
+            </li><!--col-lg-4-->
+            <li class="match-height">
+                <div class="category-content">
+                    <i style="color:#009996;" class="fa fa-home" @*class="zmdi zmdi-case"*@></i>
+                    <h4><a href="@Url.Action("Index","Ads",new { categoryId=5})">Property</a></h4>
+                </div><!--category-box-->
+            </li><!--col-lg-4-->
+
+        </ul>
+
+    </div>
+</section>
+
+<section class="members-v3 " style="background-image:url(http://demo.joinwebs.com/classiera/pearl/wp-content/uploads/2017/12/pearl-callout.jpg)">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5 col-sm-12">
+                <div class="members-text text-left flip">
+                    <h1>ARE YOU READY</h1>
+                    <h2>Post your ads to BIZSOL</h2>
+                    <p>Sell your old goods quickly by posting ad </p>
+
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        <a href="@Url.Action("Register","Account")" class="btn btn-primary outline btn-md">Join For Free</a>
+                        <a href="@Url.Action("Login","Account")" class="btn btn-primary outline btn-md">Submit Ad</a>
+                    }
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a href="@Url.Action("showCategory","AdPost")" class="btn btn-primary outline btn-md">Submit Ad</a>
+                    }
+                </div>
+            </div>
+            <div class="col-lg-7 col-md-7 col-sm-12 visible-lg">
+                <div class="member-img text-center">
+                    <img src="~/Images/28a4110444c74cde07b60174a685e407_auto-mechanic-with-wheel-vector-illustration-isolated-on-_450-470.jpeg" />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    @*id="searchdata"*@
+    <div id="adsDiv">
+        @{
+            var searchHomeViewModel = new SearchHomeViewModel();
+            searchHomeViewModel.adpost = Model.adpost;
+            searchHomeViewModel.Pager = Model.Pager;
+            searchHomeViewModel.CategoryId = Model.CategoryId;
+            searchHomeViewModel.CityId = Model.CityId;
+            searchHomeViewModel.searchTerm = Model.searchTerm;
+
+            Html.RenderPartial("_HomeSearchAds", searchHomeViewModel);
+        }
+    </div>
+</section>
+
+
+@{
+    int lahoreId = 4;
+    int islamabadId = 1;
+    int karachiId = 5;
+    int peshawarId = 3;
+    int quettaId = 2;
+}
+
+<section class="locations locations-v6 section-pad">
+    <div class="section-heading-v6">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-8 center-block">
+                    <h1 class="text-capitalize">Ads Locations</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="location-content-v6">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-sm-6">
+                    <figure class="location">
+                        <img width="800" height="500" src="~/Images/Minar-e-Pakistan_Park_Lahore.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="Pakistan" srcset="~/Images/Minar-e-Pakistan_Park_Lahore.jpg 800w, ~/Images/Minar-e-Pakistan_Park_Lahore.jpg 300w, ~/Images/Minar-e-Pakistan_Park_Lahore.jpg 768w" sizes="(max-width: 800px) 100vw, 800px" />									<figcaption>
+                            <div class="location-caption">
+                                <span><i class="fa fa-map-marker"></i></span>
+                            </div>
+                            <div class="location-caption">
+                                <h4><a href="@Url.Action("CityAds","Ads",new { cityId=lahoreId})">Lahore</a></h4>
+                                <p>
+                                    @Model.totalAds.Where(x => x.FkCityId == lahoreId).Count()&nbsp;ads posted in this location
+                                </p>
+                                <a href="@Url.Action("CityAds","Ads",new { cityId=lahoreId})">View all ads <i class="fa fa-long-arrow-right"></i></a>
+                            </div>
+                        </figcaption>
+                    </figure>
+                </div>
+                <div class="col-lg-6 col-sm-6">
+                    <figure class="location">
+                        <img width="800" height="500" src="~/Images/Shah_Faisal_Mosque_ISB.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="United Arab Emirates" srcset="~/Images/Shah_Faisal_Mosque_ISB.jpg 800w, ~/Images/Shah_Faisal_Mosque_ISB.jpg 300w, ~/Images/Shah_Faisal_Mosque_ISB.jpg 768w" sizes="(max-width: 800px) 100vw, 800px" />									<figcaption>
+                            <div class="location-caption">
+                                <span><i class="fa fa-map-marker"></i></span>
+                            </div>
+                            <div class="location-caption">
+                                <h4><a href="@Url.Action("CityAds","Ads",new { cityId=islamabadId})">Islamabad</a></h4>
+                                <p>
+                                    @Model.totalAds.Where(x => x.FkCityId == islamabadId).Count()&nbsp;ads posted in this location
+                                </p>
+                                <a href="@Url.Action("CityAds","Ads",new { cityId=islamabadId})">View all ads <i class="fa fa-long-arrow-right"></i></a>
+                            </div>
+                        </figcaption>
+                    </figure>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <figure class="location">
+                        <img width="370" height="300" src="~/Images/the-majestic-khyber-gate.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="canada" srcset="~/Images/the-majestic-khyber-gate.jpg 370w, ~/Images/the-majestic-khyber-gate.jpg 300w" sizes="(max-width: 370px) 100vw, 370px" />									<figcaption>
+                            <div class="location-caption">
+                                <span><i class="fa fa-map-marker"></i></span>
+                            </div>
+                            <div class="location-caption">
+                                <h4><a href="@Url.Action("CityAds","Ads",new { cityId=peshawarId})">Peshawar</a></h4>
+                                <p>
+                                    @Model.totalAds.Where(x => x.FkCityId == peshawarId).Count()&nbsp;ads posted in this location
+                                </p>
+                                <a href="@Url.Action("CityAds","Ads",new { cityId=peshawarId})">View all ads <i class="fa fa-long-arrow-right"></i></a>
+                            </div>
+                        </figcaption>
+                    </figure>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <figure class="location">
+                        <img width="370" height="300" src="~/Images/DADcw2SW0AEArt1 - Copy.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="united-kingdom" srcset="~/Images/DADcw2SW0AEArt1 - Copy.jpg 370w, ~/Images/DADcw2SW0AEArt1 - Copy.jpg 300w" sizes="(max-width: 370px) 100vw, 370px" />									<figcaption>
+                            <div class="location-caption">
+                                <span><i class="fa fa-map-marker"></i></span>
+                            </div>
+                            <div class="location-caption">
+                                <h4><a href="@Url.Action("CityAds","Ads",new { cityId=quettaId})">Quetta</a></h4>
+                                <p>
+                                    @Model.totalAds.Where(x => x.FkCityId == quettaId).Count()&nbsp;ads posted in this location
+                                </p>
+                                <a href="@Url.Action("CityAds","Ads",new { cityId=quettaId})">View all ads <i class="fa fa-long-arrow-right"></i></a>
+                            </div>
+                        </figcaption>
+                    </figure>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <figure class="location">
+                        <img width="370" height="300" src="~/Images/Karachi2.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="usa" srcset="~/Images/Karachi2.jpg 370w, ~/Images/Karachi2.jpg 300w" sizes="(max-width: 370px) 100vw, 370px" />									<figcaption>
+                            <div class="location-caption">
+                                <span><i class="fa fa-map-marker"></i></span>
+                            </div>
+                            <div class="location-caption">
+                                <h4><a href="@Url.Action("CityAds","Ads",new { cityId=karachiId})">Karachi</a></h4>
+                                <p>
+                                    @Model.totalAds.Where(x => x.FkCityId == karachiId).Count()&nbsp;ads posted in this location
+                                </p>
+                                <a href="@Url.Action("CityAds","Ads",new { cityId=karachiId})">View all ads <i class="fa fa-long-arrow-right"></i></a>
+                            </div>
+                        </figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<script>
+    function focusAction(controlToFocus) {
+        $('html, body').animate({
+            scrollTop: $("#" + controlToFocus).offset().top - 100
+        }, 1000);
+    }
+    var removePreloader = function () {
+        $(window).on("load", function () {
+            $(".loader").fadeOut();
+            $("#loading-overlay").delay(500).fadeOut('slow');
+        });
+    };
+
+
+
+    
+    function GetData(dUrl) {
+        debugger;
+        //console.log("Slide Call");
+        //showLoader();
+        $.ajax({
+
+            url: dUrl,
+
+            data: {
+                cityId: cityValue,
+                categoryId: categoryValue,
+                search: searchValue
+
+            }
+        })
+            .done(function (response) {
+                $("#adsDiv").html(response);
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log("fail");
+                alert("FAIL");
+            });
+    }
+
+    var cityValue;
+    var categoryValue;
+    var searchValue;
+    function getCityValue() {
+        debugger;
+        cityValue = document.getElementById("cityList").value;
+        }
+    function getCategoryValue() {
+        debugger;
+        categoryValue = document.getElementById("categoryList").value;
+    }
+    if (cityValue != "" || cityValue != undefined) {
+        cityValue = null;
+
+    }
+    if (categoryValue != "" || categoryValue != undefined) {
+        categoryValue = null;
+    }
+
+
+        $("#searchBtn").click(function () {
+            debugger;
+            searchValue = $("#search").val();
+            if (searchValue == "" || searchValue == undefined)
+            {
+                searchValue = null;
+            }
+            $.ajax({
+                //type: "POST",
+            url: '@Url.Action("_HomeSearchAds", "Home")',
+            data: {
+                cityId: cityValue,
+                categoryId: categoryValue,
+                search: searchValue
+            }
+            })
+            .done(function (response) {
+                $("#adsDiv").html(response);
+                focusAction("adsDiv");
+                //alert("Done");
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Fail");
+            });
+            @*window.location.href = '@Url.Action("SearchAd", "Home",new { cityId = "cityId", search = "searchValue", categoryId = 3})'.replace("cityId", cityValue) /*'.replace("cityId", cityValue).replace("categortyId", categoryValue); '/Home/AboutUs'*/*@
+        });
+
+
+</script>

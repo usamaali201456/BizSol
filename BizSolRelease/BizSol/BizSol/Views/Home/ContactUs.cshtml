@@ -1,0 +1,86 @@
+﻿@model BizSol.Models.ViewModels.ContactViewModel
+@{
+    ViewBag.Title = "About Us";
+    Layout = "~/Views/Shared/_LayoutWithOutSearch.cshtml";
+
+}
+
+<section class="contact-us border-bottom section-pad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+            </div>
+        </div><!--row-->
+    </div><!--container-->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <h4 class="text-uppercase">Contact Form</h4>
+                <form name="contactForm" onclick="location.href'@Url.Action("ContactUs","Home")'" method="POST" id="contact-form" data-toggle="validator" novalidate="true">
+                    <div class="form-group">
+                        <div class="form-inline row">
+                            <div class="form-group col-sm-6">
+                                <label class="text-capitalize" for="name">Full name : <span class="text-danger">*</span> </label>
+                                <div class="inner-addon left-addon">
+                                    <i class="left-addon form-icon fa fa-font"></i>
+                                    <input id="name" type="text" name="FullName" class="form-control form-control-md" placeholder="Enter your full name" data-error="Name Requried" required="">
+                                    <div class="help-block with-errors">@Html.ValidationMessageFor(x=>x.FullName)</div>
+                                </div>
+                            </div><!--Name Div-->
+                            <div class="form-group col-sm-6">
+                                <label class="text-capitalize" for="email">Email : <span class="text-danger">*</span></label>
+                                <div class="inner-addon left-addon">
+                                    <i class="left-addon form-icon fa fa-envelope"></i>
+                                    <input id="ins_email" type="email" name="Email" class="form-control form-control-md" placeholder="example@example.com" data-error="Email required" required="">
+                                    <div class="help-block with-errors">@Html.ValidationMessageFor(x => x.Email)</div>
+                                </div>
+                            </div><!--Email-->
+                            <div class="form-group col-sm-6">
+                                <label class="text-capitalize" for="phone">Phone : </label>
+                                <div class="inner-addon left-addon">
+                                    <i class="left-addon form-icon fa fa-phone"></i>
+                                    <input id="phone" type="text" name="PhoneNumber" class="form-control form-control-md" placeholder="Enter your phone number">
+                                    <div class="help-block with-errors">@Html.ValidationMessageFor(x => x.PhoneNumber)</div>
+                                </div>
+                            </div><!--Phone Div-->
+                            <div class="form-group col-sm-12">
+                                <label class="text-capitalize" for="text">Message : <span class="text-danger">*</span></label>
+                                <div class="inner-addon">
+                                    <textarea data-error="Please type message" name="Message" id="text" placeholder="Type your message here...!" required=""></textarea>
+                                    <div class="help-block with-errors">@*@Html.ValidationMessageFor(x => x.Message)*@</div>
+                                </div>
+                            </div><!--Message Div-->
+                        </div><!--form-inline row-->
+                    </div><!--form-group-->
+                    <div class="form-group">
+                        <input type="hidden" name="submit" value="contact_form" id="submit">
+                        <button class="btn btn-primary sharp btn-md btn-style-one" type="submit" value="submit" name="submitted">Send Message</button>
+                    </div>
+                </form>
+            </div><!--col-lg-8-->
+            <div class="col-lg-4">
+                <h4 class="text-uppercase">Contact Info</h4>
+                <ul class="contact-us-info list-unstyled fa-ul">
+                    <li>
+                        <i class="fa-li fa fa-map-marker"></i>
+                        Lahore 54000
+                    </li>
+                    <li>
+                        <i class="fa-li fa fa-envelope"></i>
+                        Dummy@gmail.com
+                    </li>
+                    <li>
+                        <i class="fa-li fa fa-phone"></i>
+                        0320000000
+                    </li>
+
+                    <li>
+                        <i class="fa-li fa fa-phone"></i>
+                        0321000000
+                    </li>
+                </ul>
+            </div><!--col-lg-4-->
+        </div><!--row-->
+    </div><!--container-->
+</section>
+

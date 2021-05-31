@@ -1,0 +1,67 @@
+﻿
+@model IEnumerable<BizSol.Entities.Category>
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int i = 1;
+}
+
+<div class="container">
+
+
+    <br /><br />
+
+    <table id="userTable" class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Category</th>
+                <th scope="col">Total Ads</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                int[] catId = new int[6] { 1, 2, 3, 4, 5, 6 };
+                foreach (var category in Model)
+                {
+                    <tr>
+                        <th scope="row">@i</th>
+                        <td>@category.cat_name</td>
+                        <td>@category.AdPosts.Count</td>
+                        <td>
+                            @Html.ActionLink("Edit", "edit_category", "Admin", new { categoryId = category.cat_Id }, null) |
+                            @Html.ActionLink("Category Ads", "Ads", "Admin", new { categoryId = category.cat_Id }, htmlAttributes: new { @class = "btm btn-primary" }) |
+                            @{
+                                if (!catId.Any(category.cat_Id.Equals))
+                                {
+                                    @Html.ActionLink("Delete", "DeleteCategory", "Admin", new { categoryId = category.cat_Id }, htmlAttributes: new { @class = "btm btn-Danger" })
+                                }
+                            }
+
+                        </td>
+                    </tr>
+                    i++;
+                }
+            }
+            else
+            {
+                <tr>
+                    <td class="text-danger" colspan="4">No Category found.</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#userTable').DataTable();
+        });
+    </script>
+
+}
+

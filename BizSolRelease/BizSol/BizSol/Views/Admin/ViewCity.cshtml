@@ -1,0 +1,63 @@
+﻿
+@model IEnumerable<BizSol.Entities.City>
+@{
+    ViewBag.Title = "ViewCity";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int i = 1;
+}
+
+<div class="container">
+    <table id="userTable" class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">City</th>
+                <th scope="col">Total Ads</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                int[] famousCity = new int[5] { 1, 2, 3, 4, 5 };
+
+                foreach (var city in Model)
+                {
+                    <tr>
+                        <th scope="row">@i</th>
+                        <td>@city.CityName</td>
+                        <td>@city.AdPosts.Count</td>
+                        <td>
+                            @Html.ActionLink("Edit", "UpdateCity", "Admin", new { cityId = city.CityID }, null) |
+                            @Html.ActionLink("City Ads", "Ads", "Admin", new { cityId = city.CityID }, htmlAttributes: new { @class = "btm btn-primary" }) |
+                            @{
+                                if (!famousCity.Any(city.CityID.Equals))
+                                {
+                                    @Html.ActionLink("Delete", "DeleteCity", "Admin", new { cityId = city.CityID }, htmlAttributes: new { @class = "btm btn-Danger" })
+                                }
+                            }
+                        </td>
+                    </tr>
+                    i++;
+                }
+            }
+            else
+            {
+                <tr>
+                    <td class="text-danger" colspan="4">No City found.</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#userTable').DataTable();
+        });
+    </script>
+}
+

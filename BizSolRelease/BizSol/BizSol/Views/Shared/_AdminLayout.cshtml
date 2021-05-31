@@ -1,0 +1,88 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+        .na {
+            text-decoration: none;
+            color: white;
+        }
+
+        .ht {
+            font-weight: bold;
+            color: white;
+        }
+    </style>
+    <title>@Page.Title</title>
+    @RenderSection("head", required: false)
+
+
+</head>
+<body>
+    <nav class="navbar navbar-inverse" style="">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <div class="navbar-brand">
+                    @Html.ActionLink("BizSol", "Index", "Admin", null, new { @class = "ht" })
+                </div>
+            </div>
+            <ul class="nav navbar-nav">
+                @{
+                    if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                    {
+                        <li>@Html.ActionLink("Category List", "ViewCategory", "Admin", null, new {@class = "ht"})</li>
+
+                        <li>
+                            @Html.ActionLink("City List", "ViewCity", "Admin", null, new {@class = "ht"})
+                        </li>
+                        <li>
+                            @Html.ActionLink("User List", "Usr_list", "Admin", null, new {@class = "ht"})
+                        </li>
+                    }
+                }
+               
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                @{
+                    if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                    {
+                        <li style="margin-top: 15px !important">
+                            <form id="form4" method="post" action="/Admin/LogOff">
+                                @Html.AntiForgeryToken()
+                                <a style="color: #9d9d9d; text-decoration: none; cursor: pointer" onclick="document.getElementById('form4').submit();">
+                                    Log out
+                                </a>
+                            </form>
+                        </li>
+                        <li>
+                            @Html.ActionLink("Add City", "AddCity", "Admin", null, new {@class = "ht"})
+                        </li>
+                        <li>
+                            @Html.ActionLink("Add Category", "AddCategory", "Admin", null, new {@class = "ht"})
+                        </li>
+                    }
+                }
+               
+            </ul>
+        </div>
+    </nav>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    @RenderSection("Scripts", required: false)
+
+    @RenderBody()
+
+</body>
+</html>
+
+
+
+

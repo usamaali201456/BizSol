@@ -1,0 +1,40 @@
+﻿@model IEnumerable<BizSol.Entities.Category>
+
+@{
+    ViewBag.Title = "showCategory";
+    Layout = "~/Views/Shared/_LayoutWithOutSearch.cshtml";
+
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<h2 style="text-align:center">Category&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-cubes fa-lg"></i></h2>
+<br />
+<br />
+<div class="container">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="social-login border-bottom">
+            <h5 class="text-uppercase text-center">
+                Select Category
+            </h5>
+
+        </div>
+
+        <br />
+        <br />
+        <table class="table" style="text-align:center">
+            
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(item.cat_name, "CategoryDetail", new { id = item.cat_Id }, new { @class = "text-center" })
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+    </div>
+    <div class="col-md-3"></div>
+</div>
